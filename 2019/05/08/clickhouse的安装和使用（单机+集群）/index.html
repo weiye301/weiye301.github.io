@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="我的博客，正在完善中。。。">
+  <meta name="author" content="Weiye">
+  <meta name="keywords" content="hadoop,hive,flume,kafka,hbase,大数据">
+  <title>clickhouse的安装和使用（单机+集群） ~ weiye的个人博客</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
+
+
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>weiye的博客</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">主页</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/2.jpg')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期三, 五月 8日 2019, 11:51 中午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    4.5k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      20 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h2 id="什么是clickhous"><a href="#什么是clickhous" class="headerlink" title="什么是clickhous"></a>什么是clickhous</h2><pre><code> ClickHouse 是俄罗斯的Yandex于2016年开源的列式存储数据库（DBMS），主要用于在线分析处理查询（OLAP），能够使用SQL查询实时生成分析数据报告。</code></pre><h2 id="安装前的准备"><a href="#安装前的准备" class="headerlink" title="安装前的准备"></a>安装前的准备</h2><p>以CentOS6.8为例</p>
+<p> <strong>1. <strong>CentOS取消打开文件数限制</strong></strong><br>    在/etc/security/limits.conf、/etc/security/limits.d/90-nproc.conf这2个文件的末尾加入一下内容：</p>
+<ul>
+<li><p>soft nofile 65536 </p>
+</li>
+<li><p>hard nofile 65536 </p>
+</li>
+<li><p>soft nproc 131072 </p>
+</li>
+<li><p>hard nproc 131072<br>重启生效 用ulimit –n 或者ulimit –a查看设置结果<br>用ulimit –n 或者ulimit –a查看设置结果</p>
+<pre><code>[root@hadoop102 ~]# ulimit -n
+65536</code></pre></li>
+<li><p><em>2. CentOS取消取消SELINU*</em></p>
+<pre><code>修改/etc/selinux/config中的SELINUX=disabled后重启</code></pre><p>   vim /etc/selinux/config<br>   SELINUX=disabled</p>
+</li>
+<li><p><em>3. CentOS关闭防火墙*</em></p>
+<pre><code>service iptables stop 
+service ip6tables stop</code></pre></li>
+</ul>
+<p><strong>4. 安装依赖</strong></p>
+<pre><code>   yum install -y libtool
+   yum install -y *unixODBC*</code></pre><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><strong>1.网址</strong></p>
+<p><a href="https://clickhouse.yandex/" target="_blank" rel="noopener">官网</a><br><a href="https://packagecloud.io/altinity/clickhouse" target="_blank" rel="noopener">安装包下载地址</a></p>
+<p><strong>2.单机模式</strong></p>
+<p><strong>上传5个文件到Linux中</strong></p>
+<pre><code>[root@hadoop102 software]# ls
+clickhouse-client-1.1.54236-4.el6.x86_64.rpm      
+clickhouse-server-1.1.54236-4.el6.x86_64.rpm
+clickhouse-compressor-1.1.54236-4.el6.x86_64.rpm  
+clickhouse-server-common-1.1.54236-4.el6.x86_64.rpm
+clickhouse-debuginfo-1.1.54236-4.el6.x86_64.rpm</code></pre><p><strong>分别安装这5个rpm文件</strong></p>
+<pre><code>[root@hadoop102 software]#  rpm -ivh *.rpm </code></pre><p><strong>启动ClickServer</strong><br>前台启动：</p>
+<pre><code>clickhouse-server –config-file=/etc/clickhouse-server/config.xml</code></pre><p>后台启动：</p>
+<pre><code>nohup clickhouse-server –config-file=/etc/clickhouse-server/config.xml  &gt;null 2&gt;&amp;1 
+[1] 2696</code></pre><p><strong>使用client连接server</strong></p>
+<pre><code>clickhouse-client </code></pre><p><strong>3.分布式安装</strong></p>
+<p><strong>准备三台机器，改好主机名之类的，然后执行以上所有步骤</strong><br>我这里是hadoop102,hadoop103,hadoop104</p>
+<p><strong>三台机器修改配置文件config.xml</strong></p>
+<pre><code>vim /etc/clickhouse-server/config.xml
+把60行左右的三行改为这样
+    &lt;listen_host&gt;::&lt;/listen_host&gt;
+    &lt;!-- &lt;listen_host&gt;::1&lt;/listen_host&gt; --&gt;
+    &lt;!-- &lt;listen_host&gt;127.0.0.1&lt;/listen_host&gt; --&gt;</code></pre><p><strong>在三台机器的etc目录下新建metrika.xml文件</strong></p>
+<pre><code>vim /etc/metrika.xml
+添加如下内容：
+&lt;yandex&gt;
+&lt;clickhouse_remote_servers&gt;
+    &lt;perftest_3shards_1replicas&gt;
+        &lt;shard&gt;
+             &lt;internal_replication&gt;true&lt;/internal_replication&gt;
+            &lt;replica&gt;
+                &lt;host&gt;hadoop102&lt;/host&gt;
+                &lt;port&gt;9000&lt;/port&gt;
+            &lt;/replica&gt;
+        &lt;/shard&gt;
+        &lt;shard&gt;
+            &lt;replica&gt;
+                &lt;internal_replication&gt;true&lt;/internal_replication&gt;
+                &lt;host&gt;hadoop103&lt;/host&gt;
+                &lt;port&gt;9000&lt;/port&gt;
+            &lt;/replica&gt;
+        &lt;/shard&gt;
+        &lt;shard&gt;
+            &lt;internal_replication&gt;true&lt;/internal_replication&gt;
+            &lt;replica&gt;
+                &lt;host&gt;hadoop104&lt;/host&gt;
+                &lt;port&gt;9000&lt;/port&gt;
+            &lt;/replica&gt;
+        &lt;/shard&gt;
+    &lt;/perftest_3shards_1replicas&gt;
+&lt;/clickhouse_remote_servers&gt;
+
+
+&lt;zookeeper-servers&gt;
+  &lt;node index=&quot;1&quot;&gt;
+    &lt;host&gt;hadoop102&lt;/host&gt;
+    &lt;port&gt;2181&lt;/port&gt;
+  &lt;/node&gt;
+
+  &lt;node index=&quot;2&quot;&gt;
+    &lt;host&gt;hadoop103&lt;/host&gt;
+    &lt;port&gt;2181&lt;/port&gt;
+  &lt;/node&gt;
+  &lt;node index=&quot;3&quot;&gt;
+    &lt;host&gt;hadoop104&lt;/host&gt;
+    &lt;port&gt;2181&lt;/port&gt;
+  &lt;/node&gt;
+&lt;/zookeeper-servers&gt;
+
+&lt;macros&gt;
+    &lt;replica&gt;hadoop102&lt;/replica&gt;
+&lt;/macros&gt;
+
+
+&lt;networks&gt;
+   &lt;ip&gt;::/0&lt;/ip&gt;
+&lt;/networks&gt;
+
+
+&lt;clickhouse_compression&gt;
+&lt;case&gt;
+  &lt;min_part_size&gt;10000000000&lt;/min_part_size&gt;
+
+  &lt;min_part_size_ratio&gt;0.01&lt;/min_part_size_ratio&gt;                                                                                                                                       
+  &lt;method&gt;lz4&lt;/method&gt;
+&lt;/case&gt;
+&lt;/clickhouse_compression&gt;
+
+&lt;/yandex&gt;</code></pre><p><strong>注意：</strong>    </p>
+<pre><code>&lt;macros&gt;
+    &lt;replica&gt;hadoop102&lt;/replica&gt;
+&lt;/macros&gt;</code></pre><p>不同机器这里不能相同</p>
+<p><strong>三台机器启动ClickServer</strong></p>
+<pre><code>service clickhouse-server start</code></pre><h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p> <strong>整型</strong><br>固定长度的整型，包括有符号整型或无符号整型。<br>整型范：<br>Int8 - [-128 : 127]<br>Int16 - [-32768 : 32767]<br>Int32 - [-2147483648 : 2147483647]<br>Int64 - [-9223372036854775808 : 9223372036854775807]<br>无符号整型范：<br>UInt8 - [0 : 255]<br>UInt16 - [0 : 65535]<br>UInt32 - [0 : 4294967295]<br>UInt64 - [0 : 18446744073709551615]</p>
+<p> <strong>浮点型</strong><br>Float32 - float<br>Float64 – double<br>建议尽可能以整数形式存储数据。例如，将固定精度的数字转换为整数值，如时间用毫秒为单位表示，因为浮点型进行计算时可能引起四舍五入的误差。</p>
+<pre><code>select 1-0.9
+┌───────minus(1, 0.9)─┐
+│ 0.09999999999999998 │
+└─────────────────────┘</code></pre><p>与标准SQL相比，ClickHouse 支持以下类别的浮点数：</p>
+<p>Inf-正无穷</p>
+<pre><code>select 1/0
+┌─divide(1, 0)─┐
+│          inf │
+└──────────────┘</code></pre><p>-Inf-负无穷：</p>
+<pre><code>select -1/0
+┌─divide(1, 0)─┐
+│          -inf │
+└──────────────┘</code></pre><p>NaN-非数字：</p>
+<pre><code>:) select 0/0
+┌─divide(0, 0)─┐
+│          nan │
+└──────────────┘</code></pre><p><strong>布尔型</strong><br>没有单独的类型来存储布尔值。可以使用 UInt8 类型，取值限制为 0 或 1。</p>
+<p><strong>字符串</strong><br>String<br>    字符串可以任意长度的。它可以包含任意的字节集，包含空字节。<br>FixedString(N)<br>    固定长度 N 的字符串，N 必须是严格的正自然数。当服务端读取长度小于 N 的字符串时候，通过在字符串末尾添加空字节来达到 N 字节长度。 当服务端读取长度大于 N 的字符串时候，将返回错误消息。<br>    与String相比，极少会使用FixedString，因为使用起来不是很方便。</p>
+<p><strong>枚举类型</strong><br>包括 Enum8 和 Enum16 类型<br>Enum 保存 ‘string’= integer 的对应关系。<br>Enum8 用 ‘String’= Int8 对描述。<br>Enum16 用 ‘String’= Int16 对描述。<br>用法演示：<br>创建一个带有一个枚举 Enum8(‘hello’ = 1, ‘world’ = 2) 类型的列：</p>
+<pre><code>CREATE TABLE t_enum
+(
+    x Enum8(&#39;hello&#39; = 1, &#39;world&#39; = 2)
+)
+ENGINE = TinyLog</code></pre><p>这个 x 列只能存储类型定义中列出的值：’hello’或’world’。如果尝试保存任何其他值，ClickHouse 抛出异常。</p>
+<pre><code>    INSERT INTO t_enum VALUES (&#39;hello&#39;), (&#39;world&#39;), (&#39;hello&#39;)
+
+    INSERT INTO t_enum VALUES
+
+    Ok.
+
+3 rows in set. Elapsed: 0.002 sec.
+
+insert into t_enum values(&#39;a&#39;)
+
+INSERT INTO t_enum VALUES
+
+
+Exception on client:
+Code: 49. DB::Exception: Unknown element &#39;a&#39; for type Enum8(&#39;hello&#39; = 1, &#39;world&#39; = 2)</code></pre><p>从表中查询数据时，ClickHouse 从 Enum 中输出字符串值。</p>
+<pre><code>SELECT * FROM t_enum
+
+┌─x─────┐
+│ hello │
+│ world │
+│ hello │
+└───────┘</code></pre><p>如果需要看到对应行的数值，则必须将 Enum 值转换为整数类型。</p>
+<pre><code>SELECT CAST(x, &#39;Int8&#39;) FROM t_enum
+
+┌─CAST(x, &#39;Int8&#39;)─┐
+│               1 │
+│               2 │
+│               1 │
+└─────────────────┘</code></pre><p><strong>数组</strong><br>Array(T)：由 T 类型元素组成的数组。<br>T 可以是任意类型，包含数组类型。 但不推荐使用多维数组，ClickHouse 对多维数组的支持有限。例如，不能在 MergeTree 表中存储多维数组。<br>可以使用array函数来创建数组：</p>
+<pre><code>array(T)</code></pre><p>也可以使用方括号：</p>
+<pre><code>[]</code></pre><p>创建数组案例：</p>
+<pre><code>SELECT array(1, 2) AS x, toTypeName(x)
+
+SELECT
+    [1, 2] AS x,
+    toTypeName(x)
+
+┌─x─────┬─toTypeName(array(1, 2))─┐
+│ [1,2] │ Array(UInt8)            │
+└───────┴─────────────────────────┘
+
+1 rows in set. Elapsed: 0.002 sec.
+
+:) SELECT [1, 2] AS x, toTypeName(x)
+
+SELECT
+    [1, 2] AS x,
+    toTypeName(x)
+
+┌─x─────┬─toTypeName([1, 2])─┐
+│ [1,2] │ Array(UInt8)       │
+└───────┴────────────────────┘
+
+1 rows in set. Elapsed: 0.002 sec.</code></pre><p><strong>元组</strong><br>Tuple(T1, T2, …)：元组，其中每个元素都有单独的类型。<br>创建元组的示例：</p>
+<pre><code>:) SELECT tuple(1,&#39;a&#39;) AS x, toTypeName(x)
+
+SELECT
+    (1, &#39;a&#39;) AS x,
+    toTypeName(x)
+
+┌─x───────┬─toTypeName(tuple(1, &#39;a&#39;))─┐
+│ (1,&#39;a&#39;) │ Tuple(UInt8, String)      │
+└─────────┴───────────────────────────┘
+
+1 rows in set. Elapsed: 0.021 sec.</code></pre><p><strong>Date</strong><br>日期类型，用两个字节存储，表示从 1970-01-01 (无符号) 到当前的日期值。</p>
+<p>还有很多数据结构，可以参考官方文档 ：<a href="https://clickhouse.yandex/docs/zh/data_types/" target="_blank" rel="noopener">官方文档</a></p>
+<h2 id="表引擎"><a href="#表引擎" class="headerlink" title="表引擎"></a>表引擎</h2><p>表引擎（即表的类型）决定了：<br>1）数据的存储方式和位置，写到哪里以及从哪里读取数据<br>2）支持哪些查询以及如何支持。<br>3）并发数据访问。<br>4）索引的使用（如果存在）。<br>5）是否可以执行多线程请求。<br>6）数据复制参数。<br>ClickHouse的表引擎有很多，下面介绍其中几种，对其他引擎有兴趣的可以去查阅官方文档：<a href="https://clickhouse.yandex/docs/zh/operations/table_engines/" target="_blank" rel="noopener">官方文档</a></p>
+<p><strong>TinyLog</strong><br>最简单的表引擎，用于将数据存储在磁盘上。每列都存储在单独的压缩文件中，写入时，数据将附加到文件末尾。<br>该引擎没有并发控制 </p>
+<ul>
+<li>如果同时从表中读取和写入数据，则读取操作将抛出异常；</li>
+<li>如果同时写入多个查询中的表，则数据将被破坏。</li>
+</ul>
+<p>这种表引擎的典型用法是 write-once：首先只写入一次数据，然后根据需要多次读取。此引擎适用于相对较小的表（建议最多1,000,000行）。如果有许多小表，则使用此表引擎是适合的，因为它比需要打开的文件更少。当拥有大量小表时，可能会导致性能低下。      不支持索引。<br>案例：创建一个TinyLog引擎的表并插入一条数据</p>
+<pre><code>:)create table t (a UInt16, b String) ENGINE = TinyLog;
+:)insert into t (a, b) values (1, &#39;abc&#39;);</code></pre><p>此时我们到保存数据的目录<code>/var/lib/clickhouse/data/default/t</code>中可以看到如下目录结构：</p>
+<pre><code>[root@hadoop102 t]# ls
+a.bin  b.bin  sizes.json</code></pre><p>a.bin 和 b.bin 是压缩过的对应的列的数据， sizes.json 中记录了每个 *.bin 文件的大小：</p>
+<pre><code>[root@hadoop102 t]# cat sizes.json 
+{&quot;yandex&quot;:{&quot;a%2Ebin&quot;:{&quot;size&quot;:&quot;28&quot;},&quot;b%2Ebin&quot;:{&quot;size&quot;:&quot;30&quot;}}}</code></pre><p><strong>Memory</strong><br>       内存引擎，数据以未压缩的原始形式直接保存在内存当中，服务器重启数据就会消失。读写操作不会相互阻塞，不支持索引。简单查询下有非常非常高的性能表现（超过10G/s）。<br>        一般用到它的地方不多，除了用来测试，就是在需要非常高的性能，同时数据量又不太大（上限大概 1 亿行）的场景。</p>
+<p><strong>Merge</strong><br>Merge 引擎 (不要跟 MergeTree 引擎混淆) 本身不存储数据，但可用于同时从任意多个其他的表中读取数据。 读是自动并行的，不支持写入。读取时，那些被真正读取到数据的表的索引（如果有的话）会被使用。<br>Merge 引擎的参数：一个数据库名和一个用于匹配表名的正则表达式。<br>案例：先建t1，t2，t3三个表，然后用 Merge 引擎的 t 表再把它们链接起来。</p>
+<pre><code>:)create table t1 (id UInt16, name String) ENGINE=TinyLog;
+:)create table t2 (id UInt16, name String) ENGINE=TinyLog;
+:)create table t3 (id UInt16, name String) ENGINE=TinyLog;
+
+:)insert into t1(id, name) values (1, &#39;first&#39;);
+:)insert into t2(id, name) values (2, &#39;second&#39;);
+:)insert into t3(id, name) values (3, &#39;i am in t3&#39;);
+
+:)create table t (id UInt16, name String) ENGINE=Merge(currentDatabase(), &#39;^t&#39;);
+
+:) select * from t;
+┌─id─┬─name─┐
+│  2 │ second │
+└────┴──────┘
+┌─id─┬─name──┐
+│  1 │ first │
+└────┴───────┘
+┌─id─┬─name───────┐
+│ 3     │ i am in t3 │
+└────┴────────────┘</code></pre><p><strong>MergeTree</strong><br>Clickhouse 中最强大的表引擎当属 MergeTree （合并树）引擎及该系列（*MergeTree）中的其他引擎。<br>MergeTree 引擎系列的基本理念如下。当你有巨量数据要插入到表中，你要高效地一批批写入数据片段，并希望这些数据片段在后台按照一定规则合并。相比在插入时不断修改（重写）数据进存储，这种策略会高效很多。<br>格式：</p>
+<pre><code>`ENGINE [=] MergeTree(date-column [, sampling_expression], (primary, key),` index_granularity)</code></pre><p>参数解读：</p>
+<pre><code>date-column — 类型为 Date 的列名。ClickHouse 会自动依据这个列按月创建分区。分区名格式为 &quot;YYYYMM&quot; 。
+sampling_expression — 采样表达式。
+(primary, key) — 主键。类型为Tuple()
+index_granularity — 索引粒度。即索引中相邻”标记”间的数据行数。设为 8192 可以适用大部分场景。</code></pre><p>案例：</p>
+<pre><code>create table mt_table (date  Date, id UInt8, name String) ENGINE=MergeTree(date, (id, name), 8192);
+
+insert into mt_table values (&#39;2019-05-01&#39;, 1, &#39;zhangsan&#39;);
+insert into mt_table values (&#39;2019-06-01&#39;, 2, &#39;lisi&#39;);
+insert into mt_table values (&#39;2019-05-03&#39;, 3, &#39;wangwu&#39;);
+
+
+在/var/lib/clickhouse/data/default/mt_tree下可以看到：
+
+
+[root@hadoop102 mt_table]# ls
+20190501_20190501_2_2_0  20190503_20190503_6_6_0  20190601_20190601_4_4_0  detached</code></pre><p>随便进入一个目录：</p>
+<pre><code>[root@hadoop102 20190601_20190601_4_4_0]# ls
+checksums.txt  columns.txt  date.bin  date.mrk  id.bin  id.mrk  name.bin  name.mrk  primary.idx</code></pre><ul>
+<li>*.bin是按列保存数据的文件</li>
+<li>*.mrk保存块偏移量</li>
+<li>primary.idx保存主键索引</li>
+</ul>
+<p><strong>ReplacingMergeTree</strong><br>这个引擎是在 MergeTree 的基础上，添加了“处理重复数据”的功能，该引擎和MergeTree的不同之处在于它会删除具有相同主键的重复项。数据的去重只会在合并的过程中出现。合并会在未知的时间在后台进行，所以你无法预先作出计划。有一些数据可能仍未被处理。因此，ReplacingMergeTree 适用于在后台清除重复的数据以节省空间，但是它不保证没有重复的数据出现。<br>格式：</p>
+<pre><code>ENGINE [=] ReplacingMergeTree(date-column [, sampling_expression], (primary, key), index_granularity, [ver])</code></pre><p>可以看出他比MergeTree只多了一个ver，这个ver指代版本列。<br>案例：</p>
+<pre><code>create table rmt_table (date  Date, id UInt8, name String,point UInt8) ENGINE= ReplacingMergeTree(date, (id, name), 8192,point);
+
+插入一些数据：
+insert into rmt_table values (&#39;2019-07-10&#39;, 1, &#39;a&#39;, 20);
+insert into rmt_table values (&#39;2019-07-10&#39;, 1, &#39;a&#39;, 30);
+insert into rmt_table values (&#39;2019-07-11&#39;, 1, &#39;a&#39;, 20);
+insert into rmt_table values (&#39;2019-07-11&#39;, 1, &#39;a&#39;, 30);
+insert into rmt_table values (&#39;2019-07-11&#39;, 1, &#39;a&#39;, 10);
+
+等待一段时间或optimize table rmt_table手动触发merge，后查询
+:) select * from rmt_table;
+┌───────date─┬─id─┬─name─┬─point─┐
+│ 2019-07-11 │  1 │ a    │    30 │
+└────────────┴────┴──────┴───────┘</code></pre><p><strong>SummingMergeTree</strong><br>该引擎继承自 MergeTree。区别在于，当合并 SummingMergeTree 表的数据片段时，ClickHouse 会把所有具有相同主键的行合并为一行，该行包含了被合并的行中具有数值数据类型的列的汇总值。如果主键的组合方式使得单个键值对应于大量的行，则可以显著的减少存储空间并加快数据查询的速度，对于不可加的列，会取一个最先出现的值。<br>语法：</p>
+<pre><code>ENGINE [=] SummingMergeTree(date-column [, sampling_expression], (primary, key), index_granularity, [columns])</code></pre><p>参数：</p>
+<pre><code>columns — 包含将要被汇总的列的列名的元组</code></pre><p>案例：</p>
+<pre><code>create table smt_table (date Date, name String, a UInt16, b UInt16) ENGINE=SummingMergeTree(date, (date, name), 8192, (a))</code></pre><p>插入数据：</p>
+<pre><code>insert into smt_table (date, name, a, b) values (&#39;2019-07-10&#39;, &#39;a&#39;, 1, 2);
+insert into smt_table (date, name, a, b) values (&#39;2019-07-10&#39;, &#39;b&#39;, 2, 1);
+insert into smt_table (date, name, a, b) values (&#39;2019-07-11&#39;, &#39;b&#39;, 3, 8);
+insert into smt_table (date, name, a, b) values (&#39;2019-07-11&#39;, &#39;b&#39;, 3, 8);
+insert into smt_table (date, name, a, b) values (&#39;2019-07-11&#39;, &#39;a&#39;, 3, 1);
+insert into smt_table (date, name, a, b) values (&#39;2019-07-12&#39;, &#39;c&#39;, 1, 3);</code></pre><p>等待一段时间或optimize table smt_table手动触发merge，后查询</p>
+<pre><code>:) select * from smt_table 
+
+┌───────date─┬─name─┬─a─┬─b─┐
+│ 2019-07-10 │ a    │ 1 │ 2 │
+│ 2019-07-10 │ b    │ 2 │ 1 │
+│ 2019-07-11 │ a    │ 3 │ 1 │
+│ 2019-07-11 │ b    │ 6 │ 8 │
+│ 2019-07-12 │ c    │ 1 │ 3 │
+└────────────┴──────┴───┴───┘</code></pre><p>发现2019-07-11，b的a列合并相加了，b列取了8（因为b列为8的数据最先插入）。</p>
+<p> <strong>Distributed</strong><br>分布式引擎，本身不存储数据, 但可以在多个服务器上进行分布式查询。 读是自动并行的。读取时，远程服务器表的索引（如果有的话）会被使用。 </p>
+<pre><code>Distributed(cluster_name, database, table [, sharding_key])</code></pre><p>参数解析：</p>
+<pre><code>cluster_name  - 服务器配置文件中的集群名,在/etc/metrika.xml中配置的
+database – 数据库名
+table – 表名
+sharding_key – 数据分片键</code></pre><p>案例演示：<br>1）在hadoop102，hadoop103，hadoop104上分别创建一个表t</p>
+<pre><code>:)create table t(id UInt16, name String) ENGINE=TinyLog;</code></pre><p>2）在三台机器的t表中插入一些数据</p>
+<pre><code>:)insert into t(id, name) values (1, &#39;zhangsan&#39;);
+:)insert into t(id, name) values (2, &#39;lisi&#39;);</code></pre><p>3）在hadoop102上创建分布式表</p>
+<pre><code>:)create table dis_table(id UInt16, name String) ENGINE=Distributed(perftest_3shards_1replicas, default, t, id);</code></pre><p>4）往dis_table中插入数据</p>
+<pre><code>:) insert into dis_table select * from t</code></pre><p>5）查看数据量</p>
+<pre><code>:) select count() from dis_table 
+FROM dis_table 
+
+┌─count()─┐
+│       8 │
+└─────────┘
+:) select count() from t
+
+SELECT count()
+FROM t 
+
+┌─count()─┐
+│       3 │
+└─────────┘</code></pre><p>可以看到每个节点大约有1/3的数据</p>
+<h2 id="SQL语法"><a href="#SQL语法" class="headerlink" title="SQL语法"></a>SQL语法</h2><p><strong>CREATE</strong></p>
+<p>CREATE DATABASE<br>用于创建指定名称的数据库，语法如下：</p>
+<pre><code>CREATE DATABASE [IF NOT EXISTS] db_name</code></pre><p>如果查询中存在IF NOT EXISTS，则当数据库已经存在时，该查询不会返回任何错误。</p>
+<pre><code>:) create database test;
+
+Ok.
+
+0 rows in set. Elapsed: 0.018 sec.</code></pre><p> CREATE TABLE<br>对于创建表，语法如下：</p>
+<pre><code>CREATE TABLE [IF NOT EXISTS] [db.]table_name [ON CLUSTER cluster]
+(
+    name1 [type1] [DEFAULT|MATERIALIZED|ALIAS expr1],
+    name2 [type2] [DEFAULT|MATERIALIZED|ALIAS expr2],
+    ...
+) ENGINE = engine
+
+DEFAULT expr – 默认值，用法与SQL类似。
+MATERIALIZED expr – 物化表达式，被该表达式指定的列不能被INSERT，因为它总是被计算出来的。 对于INSERT而言，不需要考虑这些列。 另外，在SELECT查询中如果包含星号，此列不会被查询。
+ALIAS expr – 别名。</code></pre><p>有三种方式创建表：<br>1）直接创建</p>
+<pre><code>:) create table t1(id UInt16,name String) engine=TinyLog</code></pre><p>2）创建一个与其他表具有相同结构的表</p>
+<pre><code>CREATE TABLE [IF NOT EXISTS] [db.]table_name AS [db2.]name2 [ENGINE = engine]</code></pre><p>可以对其指定不同的表引擎声明。如果没有表引擎声明，则创建的表将与db2.name2使用相同的表引擎。</p>
+<pre><code>:) create table t2 as t1 engine=Memory
+
+:) desc t2
+
+DESCRIBE TABLE t2
+
+┌─name─┬─type───┬─default_type─┬─default_expression─┐
+│ id   │ UInt16 │              │                    │
+│ name   │ String │              │                    │
+└──────┴────────┴──────────────┴────────────────────┘</code></pre><p>3）使用指定的引擎创建一个与SELECT子句的结果具有相同结构的表，并使用SELECT子句的结果填充它。<br>语法：</p>
+<pre><code>CREATE TABLE [IF NOT EXISTS] [db.]table_name ENGINE = engine AS SELECT ...</code></pre><p>实例：<br>先在t2中插入几条数据</p>
+<pre><code>:) insert into t1 values(1,&#39;zhangsan&#39;),(2,&#39;lisi&#39;),(3,&#39;wangwu&#39;)
+
+:) create table t3 engine=TinyLog as select * from t1
+:) select * from t3
+┌─id─┬─name─────┐
+│  1 │ zhangsan │
+│  2 │ lisi     │
+│  3 │ wangwu   │
+└────┴──────────┘</code></pre><p> <strong>INSERT INTO</strong><br>主要用于向表中添加数据，基本格式如下：</p>
+<pre><code>INSERT INTO [db.]table [(c1, c2, c3)] VALUES (v11, v12, v13), (v21, v22, v23), ...</code></pre><p>实例：</p>
+<pre><code>:) insert into t1 values(1,&#39;zhangsan&#39;),(2,&#39;lisi&#39;),(3,&#39;wangwu&#39;)</code></pre><p>还可以使用select来写入数据：</p>
+<pre><code>INSERT INTO [db.]table [(c1, c2, c3)] SELECT ...
+    实例：
+:) insert into t2 select * from t3
+:) select * from t2
+
+┌─id─┬─name─────┐
+│  1 │ zhangsan │
+│  2 │ lisi     │
+│  3 │ wangwu   │
+└────┴──────────┘</code></pre><p>ClickHouse不支持的修改数据的查询：UPDATE, DELETE, REPLACE, MERGE, UPSERT, INSERT UPDATE。</p>
+<p><strong>ALTER</strong><br>ALTER只支持MergeTree系列，Merge和Distributed引擎的表，基本语法：</p>
+<pre><code>ALTER TABLE [db].name [ON CLUSTER cluster] ADD|DROP|MODIFY COLUMN ...</code></pre><p>参数解析：</p>
+<pre><code>ADD COLUMN – 向表中添加新列
+DROP COLUMN – 在表中删除列
+MODIFY COLUMN – 更改列的类型</code></pre><p>案例演示：<br>1）创建一个MergerTree引擎的表</p>
+<pre><code>create table mt_table (date  Date, id UInt8, name String) ENGINE=MergeTree(date, (id, name), 8192);</code></pre><p>2）向表中插入一些值</p>
+<pre><code>insert into mt_table values (&#39;2019-05-01&#39;, 1, &#39;zhangsan&#39;);
+insert into mt_table values (&#39;2019-06-01&#39;, 2, &#39;lisi&#39;);
+insert into mt_table values (&#39;2019-05-03&#39;, 3, &#39;wangwu&#39;);</code></pre><p>3）在末尾添加一个新列age</p>
+<pre><code>:)alter table mt_table add column age UInt8
+:)desc mt_table
+┌─name─┬─type───┬─default_type─┬─default_expression─┐
+│ date │ Date   │              │                    │
+│ id   │ UInt8  │              │                    │
+│ name │ String │              │                    │
+│ age  │ UInt8  │              │                    │
+└──────┴────────┴──────────────┴────────────────────┘
+:) select * from mt_table
+┌───────date─┬─id─┬─name─┬─age─┐
+│ 2019-06-01 │  2 │ lisi │   0 │
+└────────────┴────┴──────┴─────┘
+┌───────date─┬─id─┬─name─────┬─age─┐
+│ 2019-05-01 │  1 │ zhangsan │   0 │
+│ 2019-05-03 │  3 │ wangwu   │   0 │
+└────────────┴────┴──────────┴─────┘</code></pre><p>4）更改age列的类型</p>
+<pre><code>:)alter table mt_table modify column age UInt16
+:)desc mt_table
+
+┌─name─┬─type───┬─default_type─┬─default_expression─┐
+│ date │ Date   │              │                    │
+│ id   │ UInt8  │              │                    │
+│ name │ String │              │                    │
+│ age  │ UInt16 │              │                    │
+└──────┴────────┴──────────────┴────────────────────┘</code></pre><p>5）删除刚才创建的age列</p>
+<pre><code>:)alter table mt_table drop column age
+:)desc mt_table
+┌─name─┬─type───┬─default_type─┬─default_expression─┐
+│ date │ Date   │              │                    │
+│ id   │ UInt8  │              │                    │
+│ name │ String │              │                    │
+└──────┴────────┴──────────────┴────────────────────┘</code></pre><p><strong>DESCRIBE TABLE</strong><br>查看表结构</p>
+<pre><code>:)desc mt_table
+┌─name─┬─type───┬─default_type─┬─default_expression─┐
+│ date │ Date   │              │                    │
+│ id   │ UInt8  │              │                    │
+│ name │ String │              │                    │
+└──────┴────────┴──────────────┴────────────────────┘</code></pre><p> <strong>CHECK TABLE</strong><br>检查表中的数据是否损坏，他会返回两种结果：<br>0 – 数据已损坏<br>1 – 数据完整<br>该命令只支持Log，TinyLog和StripeLog引擎。</p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93">数据库</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/-clickhouse">-clickhouse</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
+
+
+
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "clickhouse的安装和使用（单机+集群）&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+</body>
+</html>
