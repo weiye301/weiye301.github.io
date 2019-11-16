@@ -15,7 +15,7 @@
   <meta name="description" content="我的博客，正在完善中。。。">
   <meta name="author" content="Weiye">
   <meta name="keywords" content="hadoop,hive,flume,kafka,hbase,大数据">
-  <title>分类 ~ weiye的个人博客</title>
+  <title>命令行执行可以，脚本无效的解决办法 ~ weiye的个人博客</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -34,7 +34,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -94,7 +94,7 @@
 </nav>
 
     <div class="view intro-2" id="background"
-         style="background: url('/img/3.jpg')no-repeat center center;
+         style="background: url('/img/2.jpg')no-repeat center center;
            background-size: cover;
            background-attachment: fixed;">
       <div class="full-bg-img">
@@ -104,6 +104,41 @@
               
             </span>
 
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期二, 二月 5日 2019, 1:12 下午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    169 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      1 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
             
           </div>
 
@@ -115,22 +150,92 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <ul>
+<li>今天在CDH上模拟数据的时候发现，使用通过命令行的方式调用java代码模拟数据可以成功运行，但是放到脚本中就失效。</li>
+</ul>
+<p><strong>我是这么解决的：</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <p>原来的脚本：</p>
+<p> #! /bin/bash</p>
+<pre><code> for i in hadoop102 hadoop103 
+ do
+     ssh $i java -classpath /opt/module/log-collector-1.0-SNAPSHOT-jar-with-dependencies.jar com.wei.appclient.AppMain $1 $2 &gt;/opt/module/test.log &amp;&quot;
+ done</code></pre></li>
+</ul>
+<p>执行完可以生成test.log，但是内容为空。</p>
+<p>解决：</p>
+<pre><code>#! /bin/bash
+
+    for i in hadoop102 hadoop103 
+    do
+        ssh $i &quot;source /etc/profile &amp;&amp; java -classpath /opt/module/log-collector-1.0-SNAPSHOT-jar-with-dependencies.jar com.wei.appclient.AppMain $1 $2 &gt;/opt/module/test.log &amp;&quot;
+    done</code></pre><p>加了个source让ssh后刷新环境变量。</p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
                 
-
-<ul class="category-tree-list"><li class="category-tree-list-item"><a class="category-tree-list-link" href="/categories/Ambari/">Ambari</a><span class="category-tree-list-count">1</span></li><li class="category-tree-list-item"><a class="category-tree-list-link" href="/categories/%E4%BD%BF%E7%94%A8/">使用</a><span class="category-tree-list-count">1</span></li><li class="category-tree-list-item"><a class="category-tree-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-tree-list-count">1</span></li><li class="category-tree-list-item"><a class="category-tree-list-link" href="/categories/%E9%97%AE%E9%A2%98/">问题</a><span class="category-tree-list-count">3</span></li></ul>
-
-
-              </div>
-            </div>
+                  <a class="hover-with-bg" href="/categories/%E9%97%AE%E9%A2%98">问题</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Linux">Linux</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -205,6 +310,11 @@
 
 
 
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
 
 
   <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
@@ -237,7 +347,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "分类&nbsp;",
+        "命令行执行可以，脚本无效的解决办法&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
