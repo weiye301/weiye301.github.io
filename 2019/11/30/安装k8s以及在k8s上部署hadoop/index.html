@@ -46,31 +46,35 @@
   };
 </script>
 
-  <meta name="description" content="我的博客，正在完善中。。。">
-<meta name="keywords" content="hadoop,hive,flume,kafka,hbase,大数据">
-<meta property="og:type" content="website">
-<meta property="og:title" content="一叶扁粥~">
-<meta property="og:url" content="https:&#x2F;&#x2F;weiye301.github.io&#x2F;index.html">
+  <meta name="description" content="kube-proxy开启ipvs的前置条件[root@hadoop102 ~]# modprobe br_netfilter  [root@hadoop102 ~]# cat &amp;gt; &#x2F;etc&#x2F;sysconfig&#x2F;modules&#x2F;ipvs.modules &amp;lt;&amp;lt;EOF #!&#x2F;bin&#x2F;bash modprobe -- ip_vs modprobe -- ip_vs_rr modprobe">
+<meta name="keywords" content="BigData,K8S,Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安装k8s以及在k8s上部署hadoop">
+<meta property="og:url" content="https:&#x2F;&#x2F;weiye301.github.io&#x2F;2019&#x2F;11&#x2F;30&#x2F;%E5%AE%89%E8%A3%85k8s%E4%BB%A5%E5%8F%8A%E5%9C%A8k8s%E4%B8%8A%E9%83%A8%E7%BD%B2hadoop&#x2F;index.html">
 <meta property="og:site_name" content="一叶扁粥~">
-<meta property="og:description" content="我的博客，正在完善中。。。">
+<meta property="og:description" content="kube-proxy开启ipvs的前置条件[root@hadoop102 ~]# modprobe br_netfilter  [root@hadoop102 ~]# cat &amp;gt; &#x2F;etc&#x2F;sysconfig&#x2F;modules&#x2F;ipvs.modules &amp;lt;&amp;lt;EOF #!&#x2F;bin&#x2F;bash modprobe -- ip_vs modprobe -- ip_vs_rr modprobe">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="c:%5CUsers%5Cwei%5CPictures%5CSnipaste_2019-11-30_08-39-10.png">
+<meta property="og:image" content="c:%5CUsers%5Cwei%5CPictures%5CSnipaste_2019-11-30_09-40-05.png">
+<meta property="og:updated_time" content="2019-11-30T08:57:39.910Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:%5CUsers%5Cwei%5CPictures%5CSnipaste_2019-11-30_08-39-10.png">
 
-<link rel="canonical" href="https://weiye301.github.io/">
+<link rel="canonical" href="https://weiye301.github.io/2019/11/30/%E5%AE%89%E8%A3%85k8s%E4%BB%A5%E5%8F%8A%E5%9C%A8k8s%E4%B8%8A%E9%83%A8%E7%BD%B2hadoop/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: true,
-    isPost: false,
+    isHome: false,
+    isPost: true,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>一叶扁粥~</title>
+  <title>安装k8s以及在k8s上部署hadoop | 一叶扁粥~</title>
   
 
 
@@ -178,10 +182,10 @@
             
 
   <div class="posts-expand">
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://weiye301.github.io/2019/11/30/%E5%AE%89%E8%A3%85k8s%E4%BB%A5%E5%8F%8A%E5%9C%A8k8s%E4%B8%8A%E9%83%A8%E7%BD%B2hadoop/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -195,8 +199,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/30/%E5%AE%89%E8%A3%85k8s%E4%BB%A5%E5%8F%8A%E5%9C%A8k8s%E4%B8%8A%E9%83%A8%E7%BD%B2hadoop/" class="post-title-link" itemprop="url">安装k8s以及在k8s上部署hadoop</a>
+          安装k8s以及在k8s上部署hadoop
         </h1>
 
         <div class="post-meta">
@@ -222,6 +225,13 @@
             </span>
 
           
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
 
         </div>
       </header>
@@ -232,7 +242,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="kube-proxy开启ipvs的前置条件"><a href="#kube-proxy开启ipvs的前置条件" class="headerlink" title="kube-proxy开启ipvs的前置条件"></a>kube-proxy开启ipvs的前置条件</h2><pre><code class="shel">[root@hadoop102 ~]# modprobe br_netfilter
+        <h2 id="kube-proxy开启ipvs的前置条件"><a href="#kube-proxy开启ipvs的前置条件" class="headerlink" title="kube-proxy开启ipvs的前置条件"></a>kube-proxy开启ipvs的前置条件</h2><pre><code class="shel">[root@hadoop102 ~]# modprobe br_netfilter
 
 [root@hadoop102 ~]# cat &gt; /etc/sysconfig/modules/ipvs.modules &lt;&lt;EOF
 #!/bin/bash
@@ -510,517 +520,52 @@ root@hadoop-hadoop-hdfs-nn-0:/usr/local/hadoop-2.9.0# hadoop fs -mkdir /test
 root@hadoop-hadoop-hdfs-nn-0:/usr/local/hadoop-2.9.0# hadoop fs -put README.txt /test
 </code></pre><p><img src="C:%5CUsers%5Cwei%5CPictures%5CSnipaste_2019-11-30_09-40-05.png" alt="Snipaste_2019-11-30_09-40-05"></p>
 
-      
     </div>
 
     
     
     
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
         
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://weiye301.github.io/2019/07/15/hue%E8%B0%83%E5%BA%A6oozie%EF%BC%8Coozie%E5%86%8D%E8%B0%83%E5%BA%A6sqoop%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/1.jpg">
-      <meta itemprop="name" content="一叶扁粥">
-      <meta itemprop="description" content="我的博客，正在完善中。。。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一叶扁粥~">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/15/hue%E8%B0%83%E5%BA%A6oozie%EF%BC%8Coozie%E5%86%8D%E8%B0%83%E5%BA%A6sqoop%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">hue调度oozie，oozie再调度sqoop遇到的问题</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-15 16:15:26" itemprop="dateCreated datePublished" datetime="2019-07-15T16:15:26+08:00">2019-07-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-20 10:40:37" itemprop="dateModified" datetime="2019-11-20T10:40:37+08:00">2019-11-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%97%AE%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">问题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="1-一直心跳，不执行任务"><a href="#1-一直心跳，不执行任务" class="headerlink" title="1.一直心跳，不执行任务"></a>1.一直心跳，不执行任务</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/15/hue%E8%B0%83%E5%BA%A6oozie%EF%BC%8Coozie%E5%86%8D%E8%B0%83%E5%BA%A6sqoop%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://weiye301.github.io/2019/07/15/ssh%E7%AA%81%E7%84%B6%E5%A4%B1%E6%95%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/1.jpg">
-      <meta itemprop="name" content="一叶扁粥">
-      <meta itemprop="description" content="我的博客，正在完善中。。。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一叶扁粥~">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/15/ssh%E7%AA%81%E7%84%B6%E5%A4%B1%E6%95%88/" class="post-title-link" itemprop="url">ssh突然失效</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-15 14:33:12" itemprop="dateCreated datePublished" datetime="2019-07-15T14:33:12+08:00">2019-07-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-20 10:40:43" itemprop="dateModified" datetime="2019-11-20T10:40:43+08:00">2019-11-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%97%AE%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">问题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>遇到很多次ssh突然某台机器失效：<br>    解决方法如下：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/15/ssh%E7%AA%81%E7%84%B6%E5%A4%B1%E6%95%88/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://weiye301.github.io/2019/06/16/hexo%E6%96%87%E7%AB%A0%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB%E7%AD%89%E8%AE%BE%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/1.jpg">
-      <meta itemprop="name" content="一叶扁粥">
-      <meta itemprop="description" content="我的博客，正在完善中。。。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一叶扁粥~">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/06/16/hexo%E6%96%87%E7%AB%A0%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB%E7%AD%89%E8%AE%BE%E7%BD%AE/" class="post-title-link" itemprop="url">hexo文章标签分类等设置</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-06-16 11:55:26" itemprop="dateCreated datePublished" datetime="2019-06-16T11:55:26+08:00">2019-06-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-20 10:40:25" itemprop="dateModified" datetime="2019-11-20T10:40:25+08:00">2019-11-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index">
-                    <span itemprop="name">使用</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="文章基本设置"><a href="#文章基本设置" class="headerlink" title="文章基本设置"></a>文章基本设置</h2><hr>
-<p>title: test<br>date: 2019-05-08 11:51:54</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/06/16/hexo%E6%96%87%E7%AB%A0%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB%E7%AD%89%E8%AE%BE%E7%BD%AE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://weiye301.github.io/2019/05/16/Centos6-8%E5%AE%89%E8%A3%85Ambari/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/1.jpg">
-      <meta itemprop="name" content="一叶扁粥">
-      <meta itemprop="description" content="我的博客，正在完善中。。。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一叶扁粥~">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/05/16/Centos6-8%E5%AE%89%E8%A3%85Ambari/" class="post-title-link" itemprop="url">Centos6.8安装Ambari</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-05-16 14:33:48" itemprop="dateCreated datePublished" datetime="2019-05-16T14:33:48+08:00">2019-05-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-20 10:39:49" itemprop="dateModified" datetime="2019-11-20T10:39:49+08:00">2019-11-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Ambari/" itemprop="url" rel="index">
-                    <span itemprop="name">Ambari</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="第1章-Ambari简述"><a href="#第1章-Ambari简述" class="headerlink" title="第1章 Ambari简述"></a>第1章 Ambari简述</h2><p><strong>1.1 什么是Ambari</strong><br>Apache Ambari项目旨在通过开发用于配置，管理和监控Apache Hadoop集群的软件来简化Hadoop管理。Ambari提供了一个直观，易用的Hadoop管理Web UI。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/05/16/Centos6-8%E5%AE%89%E8%A3%85Ambari/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://weiye301.github.io/2019/05/08/clickhouse%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8%EF%BC%88%E5%8D%95%E6%9C%BA+%E9%9B%86%E7%BE%A4%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/1.jpg">
-      <meta itemprop="name" content="一叶扁粥">
-      <meta itemprop="description" content="我的博客，正在完善中。。。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一叶扁粥~">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/05/08/clickhouse%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8%EF%BC%88%E5%8D%95%E6%9C%BA+%E9%9B%86%E7%BE%A4%EF%BC%89/" class="post-title-link" itemprop="url">clickhouse的安装和使用（单机+集群）</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-05-08 11:51:54" itemprop="dateCreated datePublished" datetime="2019-05-08T11:51:54+08:00">2019-05-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-20 10:40:15" itemprop="dateModified" datetime="2019-11-20T10:40:15+08:00">2019-11-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="什么是clickhous"><a href="#什么是clickhous" class="headerlink" title="什么是clickhous"></a>什么是clickhous</h2><pre><code> ClickHouse 是俄罗斯的Yandex于2016年开源的列式存储数据库（DBMS），主要用于在线分析处理查询（OLAP），能够使用SQL查询实时生成分析数据报告。</code></pre>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/05/08/clickhouse%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8%EF%BC%88%E5%8D%95%E6%9C%BA+%E9%9B%86%E7%BE%A4%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://weiye301.github.io/2019/02/05/%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%A7%E8%A1%8C%E5%8F%AF%E4%BB%A5%EF%BC%8C%E8%84%9A%E6%9C%AC%E6%97%A0%E6%95%88%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/1.jpg">
-      <meta itemprop="name" content="一叶扁粥">
-      <meta itemprop="description" content="我的博客，正在完善中。。。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一叶扁粥~">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/02/05/%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%A7%E8%A1%8C%E5%8F%AF%E4%BB%A5%EF%BC%8C%E8%84%9A%E6%9C%AC%E6%97%A0%E6%95%88%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="post-title-link" itemprop="url">命令行执行可以，脚本无效的解决办法</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-02-05 13:12:11" itemprop="dateCreated datePublished" datetime="2019-02-05T13:12:11+08:00">2019-02-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-20 10:40:50" itemprop="dateModified" datetime="2019-11-20T10:40:50+08:00">2019-11-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%97%AE%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">问题</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ul>
-<li>今天在CDH上模拟数据的时候发现，使用通过命令行的方式调用java代码模拟数据可以成功运行，但是放到脚本中就失效。</li>
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>一叶扁粥
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://weiye301.github.io/2019/11/30/%E5%AE%89%E8%A3%85k8s%E4%BB%A5%E5%8F%8A%E5%9C%A8k8s%E4%B8%8A%E9%83%A8%E7%BD%B2hadoop/" title="安装k8s以及在k8s上部署hadoop">https://weiye301.github.io/2019/11/30/%E5%AE%89%E8%A3%85k8s%E4%BB%A5%E5%8F%8A%E5%9C%A8k8s%E4%B8%8A%E9%83%A8%E7%BD%B2hadoop/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
 </ul>
-<p><strong>我是这么解决的：</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/02/05/%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%A7%E8%A1%8C%E5%8F%AF%E4%BB%A5%EF%BC%8C%E8%84%9A%E6%9C%AC%E6%97%A0%E6%95%88%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
+</div>
 
-    
-    
-    
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+          <div class="post-tags">
+              <a href="/tags/BigData/" rel="tag"># BigData</a>
+              <a href="/tags/K8S/" rel="tag"># K8S</a>
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/07/15/hue%E8%B0%83%E5%BA%A6oozie%EF%BC%8Coozie%E5%86%8D%E8%B0%83%E5%BA%A6sqoop%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" rel="next" title="hue调度oozie，oozie再调度sqoop遇到的问题">
+                  <i class="fa fa-chevron-left"></i> hue调度oozie，oozie再调度sqoop遇到的问题
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
       </footer>
+    
   </article>
   
   
@@ -1028,12 +573,14 @@ root@hadoop-hadoop-hdfs-nn-0:/usr/local/hadoop-2.9.0# hadoop fs -put README.txt 
 
   </div>
 
-  
-
-
 
           </div>
           
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NzYxNC8yNDExMg=="></div>
+  </div>
+  
 
         </div>
           
@@ -1058,6 +605,7 @@ root@hadoop-hadoop-hdfs-nn-0:/usr/local/hadoop-2.9.0# hadoop fs -put README.txt 
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#kube-proxy开启ipvs的前置条件"><span class="nav-number">1.</span> <span class="nav-text">kube-proxy开启ipvs的前置条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Docker-软件"><span class="nav-number">2.</span> <span class="nav-text">安装 Docker 软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Kubeadm-（主从配置）"><span class="nav-number">3.</span> <span class="nav-text">安装 Kubeadm （主从配置）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导入镜像（三台机器）"><span class="nav-number">4.</span> <span class="nav-text">导入镜像（三台机器）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化主节点"><span class="nav-number">5.</span> <span class="nav-text">初始化主节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加入主节点以及其余工作节点"><span class="nav-number">6.</span> <span class="nav-text">加入主节点以及其余工作节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署网络"><span class="nav-number">7.</span> <span class="nav-text">部署网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装helm"><span class="nav-number">8.</span> <span class="nav-text">安装helm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k8s部署hadoop"><span class="nav-number">9.</span> <span class="nav-text">k8s部署hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-创建一个文件夹存放hadoop相关文件"><span class="nav-number">9.0.1.</span> <span class="nav-text">1.创建一个文件夹存放hadoop相关文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-在-https-hub-helm-sh-charts-stable-hadoop-上查看拉取hadoop镜像"><span class="nav-number">9.0.2.</span> <span class="nav-text">2.在 https://hub.helm.sh/charts/stable/hadoop 上查看拉取hadoop镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装镜像"><span class="nav-number">9.0.3.</span> <span class="nav-text">安装镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#暴露端口"><span class="nav-number">9.0.4.</span> <span class="nav-text">暴露端口</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-50070"><span class="nav-number">9.0.4.1.</span> <span class="nav-text">4.1 50070</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#（1）创建svc文件"><span class="nav-number">9.0.4.1.1.</span> <span class="nav-text">（1）创建svc文件</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-测试"><span class="nav-number">9.0.4.2.</span> <span class="nav-text">4.3 测试</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -1202,6 +750,19 @@ root@hadoop-hadoop-hdfs-nn-0:/usr/local/hadoop-2.9.0# hadoop fs -put README.txt 
 
   
 
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
 
 </body>
 </html>
