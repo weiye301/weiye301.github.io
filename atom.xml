@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://weiye301.github.io/"/>
-  <updated>2019-12-10T03:06:27.322Z</updated>
+  <updated>2019-12-10T03:12:11.779Z</updated>
   <id>https://weiye301.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://weiye301.github.io/2019/12/10/sublime%E9%85%8D%E7%BD%AEsftp/"/>
     <id>https://weiye301.github.io/2019/12/10/sublime%E9%85%8D%E7%BD%AEsftp/</id>
     <published>2019-12-10T03:04:12.000Z</published>
-    <updated>2019-12-10T03:06:27.322Z</updated>
+    <updated>2019-12-10T03:12:11.779Z</updated>
     
-    <content type="html"><![CDATA[<p>记录一下sublime配置sftp</p><a id="more"></a><h1 id="1-选择安装sftp"><a href="#1-选择安装sftp" class="headerlink" title="1.选择安装sftp"></a>1.选择安装sftp</h1><p><img src="C:%5CUsers%5Cwei%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20191210104713552.png" alt="image-20191210104713552"></p><p><img src="C:%5CUsers%5Cwei%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20191210104730953.png" alt="image-20191210104730953"></p><p>然后搜索sftp点击安装即可，可能失败需要外网。</p><h1 id="2-配置服务器信息"><a href="#2-配置服务器信息" class="headerlink" title="2.配置服务器信息"></a>2.配置服务器信息</h1><p><img src="C:%5CUsers%5Cwei%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20191210105944724.png" alt="image-20191210105944724"></p><p><img src="C:%5CUsers%5Cwei%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20191210110105590.png" alt="image-20191210110105590"></p><p>改完保存！</p><h1 id="3-编辑服务器内的文件"><a href="#3-编辑服务器内的文件" class="headerlink" title="3.编辑服务器内的文件"></a>3.编辑服务器内的文件</h1><p><img src="C:%5CUsers%5Cwei%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20191210110152341.png" alt="image-20191210110152341"></p><p>选择刚才配置的机器：</p><p><img src="C:%5CUsers%5Cwei%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20191210110215050.png" alt="image-20191210110215050"></p><p>等待一会就连上了</p><p><img src="C:%5CUsers%5Cwei%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20191210110320085.png" alt="image-20191210110320085"></p>]]></content>
+    <content type="html"><![CDATA[<p>记录一下sublime配置sftp</p><a id="more"></a><h1 id="1-选择安装sftp"><a href="#1-选择安装sftp" class="headerlink" title="1.选择安装sftp"></a>1.选择安装sftp</h1><p><img src="/img/image-20191210104713552.png" alt="image-20191210104713552"></p><p><img src="/img/image-20191210104730953.png" alt="image-20191210104730953"></p><p>然后搜索sftp点击安装即可，可能失败需要外网。</p><h1 id="2-配置服务器信息"><a href="#2-配置服务器信息" class="headerlink" title="2.配置服务器信息"></a>2.配置服务器信息</h1><p><img src="/img/image-20191210105944724.png" alt="image-20191210105944724"></p><p><img src="/img/image-20191210110105590.png" alt="image-20191210110105590"></p><p>改完保存！</p><h1 id="3-编辑服务器内的文件"><a href="#3-编辑服务器内的文件" class="headerlink" title="3.编辑服务器内的文件"></a>3.编辑服务器内的文件</h1><p><img src="/img/image-20191210110152341.png" alt="image-20191210110152341"></p><p>选择刚才配置的机器：</p><p><img src="/img/image-20191210110215050.png" alt="image-20191210110215050"></p><p>等待一会就连上了</p><p><img src="/img/image-20191210110320085.png" alt="image-20191210110320085"></p>]]></content>
     
     <summary type="html">
     
