@@ -46,18 +46,18 @@
   };
 </script>
 
-  <meta name="description" content="遇到很多次ssh突然某台机器失效：    解决方法如下：">
-<meta name="keywords" content="Linux">
+  <meta name="description" content="Spark 的缓存具有容错机制，如果一个缓存的 RDD 的某个分区丢失了，Spark 将按照原来的计算过程，自动重新计算并进行缓存。">
+<meta name="keywords" content="Spark">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ssh突然失效">
-<meta property="og:url" content="https:&#x2F;&#x2F;weiye301.github.io&#x2F;2019&#x2F;07&#x2F;15&#x2F;ssh%E7%AA%81%E7%84%B6%E5%A4%B1%E6%95%88&#x2F;index.html">
+<meta property="og:title" content="存储级别">
+<meta property="og:url" content="https:&#x2F;&#x2F;weiye301.github.io&#x2F;2018&#x2F;12&#x2F;27&#x2F;%E5%AD%98%E5%82%A8%E7%BA%A7%E5%88%AB&#x2F;index.html">
 <meta property="og:site_name" content="一叶扁粥~">
-<meta property="og:description" content="遇到很多次ssh突然某台机器失效：    解决方法如下：">
+<meta property="og:description" content="Spark 的缓存具有容错机制，如果一个缓存的 RDD 的某个分区丢失了，Spark 将按照原来的计算过程，自动重新计算并进行缓存。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-20T02:40:43.572Z">
+<meta property="og:updated_time" content="2019-12-27T06:51:16.929Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://weiye301.github.io/2019/07/15/ssh%E7%AA%81%E7%84%B6%E5%A4%B1%E6%95%88/">
+<link rel="canonical" href="https://weiye301.github.io/2018/12/27/%E5%AD%98%E5%82%A8%E7%BA%A7%E5%88%AB/">
 
 
 <script id="page-configurations">
@@ -71,7 +71,7 @@
   };
 </script>
 
-  <title>ssh突然失效 | 一叶扁粥~</title>
+  <title>存储级别 | 一叶扁粥~</title>
   
 
 
@@ -183,7 +183,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://weiye301.github.io/2019/07/15/ssh%E7%AA%81%E7%84%B6%E5%A4%B1%E6%95%88/">
+    <link itemprop="mainEntityOfPage" href="https://weiye301.github.io/2018/12/27/%E5%AD%98%E5%82%A8%E7%BA%A7%E5%88%AB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/1.jpg">
@@ -196,7 +196,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ssh突然失效
+          存储级别
         </h1>
 
         <div class="post-meta">
@@ -206,14 +206,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-07-15 14:33:12" itemprop="dateCreated datePublished" datetime="2019-07-15T14:33:12+08:00">2019-07-15</time>
+              <time title="创建时间：2018-12-27 11:47:13" itemprop="dateCreated datePublished" datetime="2018-12-27T11:47:13+08:00">2018-12-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-20 10:40:43" itemprop="dateModified" datetime="2019-11-20T10:40:43+08:00">2019-11-20</time>
+                <time title="修改时间：2019-12-27 14:51:16" itemprop="dateModified" datetime="2019-12-27T14:51:16+08:00">2019-12-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -221,8 +221,8 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%97%AE%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">问题</span>
+                  <a href="/categories/Spark/" itemprop="url" rel="index">
+                    <span itemprop="name">Spark</span>
                   </a>
                 </span>
             </span>
@@ -245,11 +245,55 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>遇到很多次ssh突然某台机器失效：<br>    解决方法如下：</p>
+        <p> Spark 的缓存具有容错机制，如果一个缓存的 RDD 的某个分区丢失了，Spark 将按照原来的计算过程，自动重新计算并进行缓存。 </p>
 <a id="more"></a>
-<pre><code>    首先查看/var/log/sec..（后面记不清了）日志，发现权限不对
-    修改用户家目录权限：chmod 700 /home/user
-    如果还不行继续修改.ssh权限：chmod 600 /home/user/.ssh</code></pre>
+<table>
+<thead>
+<tr>
+<th>Storage Level（存储级别）</th>
+<th>Meaning（含义）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MEMORY_ONLY</td>
+<td>将 RDD 以反序列化的 Java 对象的形式存储在 JVM 中。如果内存空间不够，部分数据分区将不再缓存，在每次需要用到这些数据时重新进行计算。这是默认的级别。</td>
+</tr>
+<tr>
+<td>MEMORY_AND_DISK</td>
+<td>将 RDD 以反序列化的 Java 对象的形式存储在 JVM 中。如果内存空间不够，将未缓存的数据分区存储到磁盘，在需要使用这些分区时从磁盘读取。</td>
+</tr>
+<tr>
+<td>MEMORY_ONLY_SER</td>
+<td></td>
+</tr>
+<tr>
+<td>(Java and Scala)</td>
+<td>将 RDD 以序列化的 Java 对象的形式进行存储（每个分区为一个 byte 数组）。这种方式会比反序列化对象的方式节省很多空间，尤其是在使用 <a href="http://spark.apachecn.org/#/tuning.html" target="_blank" rel="noopener">fast serializer</a> 时会节省更多的空间，但是在读取时会增加 CPU 的计算负担。</td>
+</tr>
+<tr>
+<td>MEMORY_AND_DISK_SER</td>
+<td></td>
+</tr>
+<tr>
+<td>(Java and Scala)</td>
+<td>类似于 MEMORY_ONLY_SER，但是溢出的分区会存储到磁盘，而不是在用到它们时重新计算。</td>
+</tr>
+<tr>
+<td>DISK_ONLY</td>
+<td>只在磁盘上缓存 RDD。</td>
+</tr>
+<tr>
+<td>MEMORY_ONLY_2, MEMORY_AND_DISK_2, etc。 与上面的级别功能相同，只不过每个分区在集群中两个节点上建立副本。</td>
+<td></td>
+</tr>
+<tr>
+<td>OFF_HEAP（experimental 实验性）</td>
+<td>类似于 MEMORY_ONLY_SER，但是将数据存储在 <a href="http://spark.apachecn.org/#/configuration.html?id=memory-management" target="_blank" rel="noopener">off-heap memory</a> 中。这需要启用 off-heap 内存。</td>
+</tr>
+</tbody></table>
+<p><strong>Note:</strong> <em>在 Python 中，stored objects will 总是使用 <a href="https://docs.python.org/2/library/pickle.html" target="_blank" rel="noopener">Pickle</a> library 来序列化对象，所以无论你选择序列化级别都没关系。在 Python 中可用的存储级别有 <code>MEMORY_ONLY</code>，<code>MEMORY_ONLY_2</code>，<code>MEMORY_AND_DISK</code>，<code>MEMORY_AND_DISK_2</code>，<code>DISK_ONLY</code>，和 <code>DISK_ONLY_2</code>。</em></p>
+<p>在 shuffle 操作中（例如 <code>reduceByKey</code>），即便是用户没有调用 <code>persist</code> 方法，Spark 也会自动缓存部分中间数据.这么做的目的是，在 shuffle 的过程中某个节点运行失败时，不需要重新计算所有的输入数据。如果用户想多次使用某个 RDD，强烈推荐在该 RDD 上调用 persist 方法.</p>
+
     </div>
 
     
@@ -264,7 +308,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://weiye301.github.io/2019/07/15/ssh%E7%AA%81%E7%84%B6%E5%A4%B1%E6%95%88/" title="ssh突然失效">https://weiye301.github.io/2019/07/15/ssh%E7%AA%81%E7%84%B6%E5%A4%B1%E6%95%88/</a>
+    <a href="https://weiye301.github.io/2018/12/27/%E5%AD%98%E5%82%A8%E7%BA%A7%E5%88%AB/" title="存储级别">https://weiye301.github.io/2018/12/27/%E5%AD%98%E5%82%A8%E7%BA%A7%E5%88%AB/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -275,23 +319,20 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/Spark/" rel="tag"># Spark</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2019/06/16/hexo%E6%96%87%E7%AB%A0%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB%E7%AD%89%E8%AE%BE%E7%BD%AE/" rel="next" title="hexo文章标签分类等设置">
-                  <i class="fa fa-chevron-left"></i> hexo文章标签分类等设置
-                </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2019/07/15/hue%E8%B0%83%E5%BA%A6oozie%EF%BC%8Coozie%E5%86%8D%E8%B0%83%E5%BA%A6sqoop%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" rel="prev" title="hue调度oozie，oozie再调度sqoop遇到的问题">
-                  hue调度oozie，oozie再调度sqoop遇到的问题 <i class="fa fa-chevron-right"></i>
+                <a href="/2018/12/27/spark%E7%9A%84%E7%AE%97%E5%AD%90/" rel="prev" title="spark的算子">
+                  spark的算子 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

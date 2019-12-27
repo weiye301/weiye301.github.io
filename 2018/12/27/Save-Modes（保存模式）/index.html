@@ -46,18 +46,18 @@
   };
 </script>
 
-  <meta name="description" content="Spark 的缓存具有容错机制，如果一个缓存的 RDD 的某个分区丢失了，Spark 将按照原来的计算过程，自动重新计算并进行缓存。">
+  <meta name="description" content="Save Modes（保存模式）Save operations（保存操作）可以选择使用 SaveMode，它指定如何处理现有数据如果存在的话。重要的是要意识到，这些 save modes（保存模式）不使用任何 locking（锁定）并且不是 atomic（原子）。另外，当执行 Overwrite 时，数据将在新数据写出之前被删除。">
 <meta name="keywords" content="Spark">
 <meta property="og:type" content="article">
-<meta property="og:title" content="存储级别">
-<meta property="og:url" content="https:&#x2F;&#x2F;weiye301.github.io&#x2F;2019&#x2F;12&#x2F;27&#x2F;%E5%AD%98%E5%82%A8%E7%BA%A7%E5%88%AB&#x2F;index.html">
+<meta property="og:title" content="Save Modes（保存模式）">
+<meta property="og:url" content="https:&#x2F;&#x2F;weiye301.github.io&#x2F;2018&#x2F;12&#x2F;27&#x2F;Save-Modes%EF%BC%88%E4%BF%9D%E5%AD%98%E6%A8%A1%E5%BC%8F%EF%BC%89&#x2F;index.html">
 <meta property="og:site_name" content="一叶扁粥~">
-<meta property="og:description" content="Spark 的缓存具有容错机制，如果一个缓存的 RDD 的某个分区丢失了，Spark 将按照原来的计算过程，自动重新计算并进行缓存。">
+<meta property="og:description" content="Save Modes（保存模式）Save operations（保存操作）可以选择使用 SaveMode，它指定如何处理现有数据如果存在的话。重要的是要意识到，这些 save modes（保存模式）不使用任何 locking（锁定）并且不是 atomic（原子）。另外，当执行 Overwrite 时，数据将在新数据写出之前被删除。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-27T03:50:50.129Z">
+<meta property="og:updated_time" content="2019-12-27T06:51:29.909Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://weiye301.github.io/2019/12/27/%E5%AD%98%E5%82%A8%E7%BA%A7%E5%88%AB/">
+<link rel="canonical" href="https://weiye301.github.io/2018/12/27/Save-Modes%EF%BC%88%E4%BF%9D%E5%AD%98%E6%A8%A1%E5%BC%8F%EF%BC%89/">
 
 
 <script id="page-configurations">
@@ -71,7 +71,7 @@
   };
 </script>
 
-  <title>存储级别 | 一叶扁粥~</title>
+  <title>Save Modes（保存模式） | 一叶扁粥~</title>
   
 
 
@@ -183,7 +183,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://weiye301.github.io/2019/12/27/%E5%AD%98%E5%82%A8%E7%BA%A7%E5%88%AB/">
+    <link itemprop="mainEntityOfPage" href="https://weiye301.github.io/2018/12/27/Save-Modes%EF%BC%88%E4%BF%9D%E5%AD%98%E6%A8%A1%E5%BC%8F%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/1.jpg">
@@ -196,7 +196,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          存储级别
+          Save Modes（保存模式）
         </h1>
 
         <div class="post-meta">
@@ -205,10 +205,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2019-12-27 11:47:13 / 修改时间：11:50:50" itemprop="dateCreated datePublished" datetime="2019-12-27T11:47:13+08:00">2019-12-27</time>
+              <time title="创建时间：2018-12-27 14:50:38" itemprop="dateCreated datePublished" datetime="2018-12-27T14:50:38+08:00">2018-12-27</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-27 14:51:29" itemprop="dateModified" datetime="2019-12-27T14:51:29+08:00">2019-12-27</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -239,54 +245,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p> Spark 的缓存具有容错机制，如果一个缓存的 RDD 的某个分区丢失了，Spark 将按照原来的计算过程，自动重新计算并进行缓存。 </p>
+        <p>Save Modes（保存模式）<br>Save operations（保存操作）可以选择使用 SaveMode，它指定如何处理现有数据如果存在的话。重要的是要意识到，这些 save modes（保存模式）不使用任何 locking（锁定）并且不是 atomic（原子）。另外，当执行 Overwrite 时，数据将在新数据写出之前被删除。</p>
 <a id="more"></a>
-<table>
-<thead>
-<tr>
-<th>Storage Level（存储级别）</th>
-<th>Meaning（含义）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>MEMORY_ONLY</td>
-<td>将 RDD 以反序列化的 Java 对象的形式存储在 JVM 中。如果内存空间不够，部分数据分区将不再缓存，在每次需要用到这些数据时重新进行计算。这是默认的级别。</td>
-</tr>
-<tr>
-<td>MEMORY_AND_DISK</td>
-<td>将 RDD 以反序列化的 Java 对象的形式存储在 JVM 中。如果内存空间不够，将未缓存的数据分区存储到磁盘，在需要使用这些分区时从磁盘读取。</td>
-</tr>
-<tr>
-<td>MEMORY_ONLY_SER</td>
-<td></td>
-</tr>
-<tr>
-<td>(Java and Scala)</td>
-<td>将 RDD 以序列化的 Java 对象的形式进行存储（每个分区为一个 byte 数组）。这种方式会比反序列化对象的方式节省很多空间，尤其是在使用 <a href="http://spark.apachecn.org/#/tuning.html" target="_blank" rel="noopener">fast serializer</a> 时会节省更多的空间，但是在读取时会增加 CPU 的计算负担。</td>
-</tr>
-<tr>
-<td>MEMORY_AND_DISK_SER</td>
-<td></td>
-</tr>
-<tr>
-<td>(Java and Scala)</td>
-<td>类似于 MEMORY_ONLY_SER，但是溢出的分区会存储到磁盘，而不是在用到它们时重新计算。</td>
-</tr>
-<tr>
-<td>DISK_ONLY</td>
-<td>只在磁盘上缓存 RDD。</td>
-</tr>
-<tr>
-<td>MEMORY_ONLY_2, MEMORY_AND_DISK_2, etc。 与上面的级别功能相同，只不过每个分区在集群中两个节点上建立副本。</td>
-<td></td>
-</tr>
-<tr>
-<td>OFF_HEAP（experimental 实验性）</td>
-<td>类似于 MEMORY_ONLY_SER，但是将数据存储在 <a href="http://spark.apachecn.org/#/configuration.html?id=memory-management" target="_blank" rel="noopener">off-heap memory</a> 中。这需要启用 off-heap 内存。</td>
-</tr>
-</tbody></table>
-<p><strong>Note:</strong> <em>在 Python 中，stored objects will 总是使用 <a href="https://docs.python.org/2/library/pickle.html" target="_blank" rel="noopener">Pickle</a> library 来序列化对象，所以无论你选择序列化级别都没关系。在 Python 中可用的存储级别有 <code>MEMORY_ONLY</code>，<code>MEMORY_ONLY_2</code>，<code>MEMORY_AND_DISK</code>，<code>MEMORY_AND_DISK_2</code>，<code>DISK_ONLY</code>，和 <code>DISK_ONLY_2</code>。</em></p>
-<p>在 shuffle 操作中（例如 <code>reduceByKey</code>），即便是用户没有调用 <code>persist</code> 方法，Spark 也会自动缓存部分中间数据.这么做的目的是，在 shuffle 的过程中某个节点运行失败时，不需要重新计算所有的输入数据。如果用户想多次使用某个 RDD，强烈推荐在该 RDD 上调用 persist 方法.</p>
+<p>Scala/Java    Any Language    Meaning<br>SaveMode.ErrorIfExists (default)    “error” (default)    将 DataFrame 保存到 data source（数据源）时，如果数据已经存在，则会抛出异常。<br>SaveMode.Append    “append”    将 DataFrame 保存到 data source（数据源）时，如果 data/table 已存在，则 DataFrame 的内容将被 append（附加）到现有数据中。<br>SaveMode.Overwrite    “overwrite”    Overwrite mode（覆盖模式）意味着将 DataFrame 保存到 data source（数据源）时，如果 data/table 已经存在，则预期 DataFrame 的内容将 overwritten（覆盖）现有数据。<br>SaveMode.Ignore    “ignore”    Ignore mode（忽略模式）意味着当将 DataFrame 保存到 data source（数据源）时，如果数据已经存在，则保存操作预期不会保存 DataFrame 的内容，并且不更改现有数据。这与 SQL 中的 CREATE TABLE IF NOT EXISTS 类似。</p>
 
     </div>
 
@@ -302,7 +263,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://weiye301.github.io/2019/12/27/%E5%AD%98%E5%82%A8%E7%BA%A7%E5%88%AB/" title="存储级别">https://weiye301.github.io/2019/12/27/%E5%AD%98%E5%82%A8%E7%BA%A7%E5%88%AB/</a>
+    <a href="https://weiye301.github.io/2018/12/27/Save-Modes%EF%BC%88%E4%BF%9D%E5%AD%98%E6%A8%A1%E5%BC%8F%EF%BC%89/" title="Save Modes（保存模式）">https://weiye301.github.io/2018/12/27/Save-Modes%EF%BC%88%E4%BF%9D%E5%AD%98%E6%A8%A1%E5%BC%8F%EF%BC%89/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -320,16 +281,16 @@
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2019/12/10/sublime%E9%85%8D%E7%BD%AEsftp/" rel="next" title="sublime配置sftp">
-                  <i class="fa fa-chevron-left"></i> sublime配置sftp
+                <a href="/2018/12/27/spark%E7%9A%84%E7%AE%97%E5%AD%90/" rel="next" title="spark的算子">
+                  <i class="fa fa-chevron-left"></i> spark的算子
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2019/12/27/spark%E7%9A%84%E7%AE%97%E5%AD%90/" rel="prev" title="spark的算子">
-                  spark的算子 <i class="fa fa-chevron-right"></i>
+                <a href="/2019/02/05/%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%A7%E8%A1%8C%E5%8F%AF%E4%BB%A5%EF%BC%8C%E8%84%9A%E6%9C%AC%E6%97%A0%E6%95%88%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" rel="prev" title="命令行执行可以，脚本无效的解决办法">
+                  命令行执行可以，脚本无效的解决办法 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -389,7 +350,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
