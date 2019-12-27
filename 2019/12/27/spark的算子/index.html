@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/%E6%A0%91%E5%8F%B6.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/%E6%A0%91%E5%8F%B6.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="一叶扁粥~" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Transformations（转换）下表列出了一些 Spark 常用的 transformations（转换）。详情请参考 RDD API 文档（Scala，Java，Python，R）和 pair RDD 函数文档（Scala，Java）。">
+<meta name="keywords" content="Spark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spark的算子">
+<meta property="og:url" content="https:&#x2F;&#x2F;weiye301.github.io&#x2F;2019&#x2F;12&#x2F;27&#x2F;spark%E7%9A%84%E7%AE%97%E5%AD%90&#x2F;index.html">
+<meta property="og:site_name" content="一叶扁粥~">
+<meta property="og:description" content="Transformations（转换）下表列出了一些 Spark 常用的 transformations（转换）。详情请参考 RDD API 文档（Scala，Java，Python，R）和 pair RDD 函数文档（Scala，Java）。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-12-27T03:50:46.529Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://weiye301.github.io/2019/12/27/spark%E7%9A%84%E7%AE%97%E5%AD%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>spark的算子 | 一叶扁粥~</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一叶扁粥~</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">学无止境，心存敬畏！！！</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/weiye301" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://weiye301.github.io/2019/12/27/spark%E7%9A%84%E7%AE%97%E5%AD%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="一叶扁粥">
+      <meta itemprop="description" content="我的博客，正在完善中。。。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一叶扁粥~">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          spark的算子
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2019-12-27 11:48:19 / 修改时间：11:50:46" itemprop="dateCreated datePublished" datetime="2019-12-27T11:48:19+08:00">2019-12-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spark/" itemprop="url" rel="index">
+                    <span itemprop="name">Spark</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="Transformations（转换）"><a href="#Transformations（转换）" class="headerlink" title="Transformations（转换）"></a><a href="http://spark.apachecn.org/#/docs/4?id=transformations（转换）" target="_blank" rel="noopener">Transformations（转换）</a></h3><p>下表列出了一些 Spark 常用的 transformations（转换）。详情请参考 RDD API 文档（<a href="http://spark.apachecn.org/#/api/scala/index.html?id=org.apache.spark.rdd.rdd" target="_blank" rel="noopener">Scala</a>，<a href="http://spark.apachecn.org/#/api/java/index.html?org%2Fapache%2Fspark%2Fapi%2Fjava%2FJavaRDD.html" target="_blank" rel="noopener">Java</a>，<a href="http://spark.apachecn.org/#/api/python/pyspark.html?id=pyspark.rdd" target="_blank" rel="noopener">Python</a>，<a href="http://spark.apachecn.org/#/api/R/index.html" target="_blank" rel="noopener">R</a>）和 pair RDD 函数文档（<a href="http://spark.apachecn.org/#/api/scala/index.html?id=org.apache.spark.rdd.pairrddfunctions" target="_blank" rel="noopener">Scala</a>，<a href="http://spark.apachecn.org/#/api/java/index.html?org%2Fapache%2Fspark%2Fapi%2Fjava%2FJavaPairRDD.html" target="_blank" rel="noopener">Java</a>）。</p>
+<a id="more"></a>
+<table>
+<thead>
+<tr>
+<th>Transformation（转换）</th>
+<th>Meaning（含义）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>map</strong>(<em>func</em>)</td>
+<td>返回一个新的 distributed dataset（分布式数据集），它由每个 source（数据源）中的元素应用一个函数 <em>func</em> 来生成。</td>
+</tr>
+<tr>
+<td><strong>filter</strong>(<em>func</em>)</td>
+<td>返回一个新的 distributed dataset（分布式数据集），它由每个 source（数据源）中应用一个函数 <em>func</em> 且返回值为 true 的元素来生成。</td>
+</tr>
+<tr>
+<td><strong>flatMap</strong>(<em>func</em>)</td>
+<td>与 map 类似，但是每一个输入的 item 可以被映射成 0 个或多个输出的 items（所以 <em>func</em> 应该返回一个 Seq 而不是一个单独的 item）。</td>
+</tr>
+<tr>
+<td><strong>mapPartitions</strong>(<em>func</em>)</td>
+<td>与 map 类似，但是单独的运行在在每个 RDD 的 partition（分区，block）上，所以在一个类型为 T 的 RDD 上运行时 <em>func</em> 必须是 Iterator<T> =&gt; Iterator<U> 类型。</td>
+</tr>
+<tr>
+<td><strong>mapPartitionsWithIndex</strong>(<em>func</em>)</td>
+<td>与 mapPartitions 类似，但是也需要提供一个代表 partition 的 index（索引）的 interger value（整型值）作为参数的 <em>func_，所以在一个类型为 T 的 RDD 上运行时 _func</em> 必须是 (Int, Iterator<T>) =&gt; Iterator<U> 类型。</td>
+</tr>
+<tr>
+<td><strong>sample</strong>(<em>withReplacement</em>, <em>fraction</em>, <em>seed</em>)</td>
+<td>样本数据，设置是否放回（withReplacement），采样的百分比（_fraction_）、使用指定的随机数生成器的种子（seed）。</td>
+</tr>
+<tr>
+<td><strong>union</strong>(<em>otherDataset</em>)</td>
+<td>反回一个新的 dataset，它包含了 source dataset（源数据集）和 otherDataset（其它数据集）的并集。</td>
+</tr>
+<tr>
+<td><strong>intersection</strong>(<em>otherDataset</em>)</td>
+<td>返回一个新的 RDD，它包含了 source dataset（源数据集）和 otherDataset（其它数据集）的交集。</td>
+</tr>
+<tr>
+<td><strong>distinct</strong>([_numTasks_]))</td>
+<td>返回一个新的 dataset，它包含了 source dataset（源数据集）中去重的元素。</td>
+</tr>
+<tr>
+<td><strong>groupByKey</strong>([_numTasks_])</td>
+<td>在一个 (K, V) pair 的 dataset 上调用时，返回一个 (K, Iterable<V>) .</td>
+</tr>
+<tr>
+<td><strong>Note:</strong> 如果分组是为了在每一个 key 上执行聚合操作（例如，sum 或 average)，此时使用 <code>reduceByKey</code> 或 <code>aggregateByKey</code> 来计算性能会更好.</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Note:</strong> 默认情况下，并行度取决于父 RDD 的分区数。可以传递一个可选的 <code>numTasks</code> 参数来设置不同的任务数。</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>reduceByKey</strong>(<em>func</em>, [_numTasks_])</td>
+<td>在 (K, V) pairs 的 dataset 上调用时，返回 dataset of (K, V) pairs 的 dataset，其中的 values 是针对每个 key 使用给定的函数 <em>func</em> 来进行聚合的，它必须是 type (V,V) =&gt; V 的类型。像 <code>groupByKey</code> 一样，reduce tasks 的数量是可以通过第二个可选的参数来配置的。</td>
+</tr>
+<tr>
+<td><strong>aggregateByKey</strong>(<em>zeroValue</em>)(<em>seqOp</em>, <em>combOp</em>, [_numTasks_])</td>
+<td>在 (K, V) pairs 的 dataset 上调用时，返回 (K, U) pairs 的 dataset，其中的 values 是针对每个 key 使用给定的 combine 函数以及一个 neutral “0” 值来进行聚合的。允许聚合值的类型与输入值的类型不一样，同时避免不必要的配置。像 <code>groupByKey</code> 一样，reduce tasks 的数量是可以通过第二个可选的参数来配置的。</td>
+</tr>
+<tr>
+<td><strong>sortByKey</strong>([_ascending_], [_numTasks_])</td>
+<td>在一个 (K, V) pair 的 dataset 上调用时，其中的 K 实现了 Ordered，返回一个按 keys 升序或降序的 (K, V) pairs 的 dataset，由 boolean 类型的 <code>ascending</code> 参数来指定。</td>
+</tr>
+<tr>
+<td><strong>join</strong>(<em>otherDataset</em>, [_numTasks_])</td>
+<td>在一个 (K, V) 和 (K, W) 类型的 dataset 上调用时，返回一个 (K, (V, W)) pairs 的 dataset，它拥有每个 key 中所有的元素对。Outer joins 可以通过 <code>leftOuterJoin</code>, <code>rightOuterJoin</code> 和 <code>fullOuterJoin</code> 来实现。</td>
+</tr>
+<tr>
+<td><strong>cogroup</strong>(<em>otherDataset</em>, [_numTasks_])</td>
+<td>在一个 (K, V) 和的 dataset 上调用时，返回一个 (K, (Iterable<V>, Iterable<W>)) tuples 的 dataset。这个操作也调用了 <code>groupWith</code>。</td>
+</tr>
+<tr>
+<td><strong>cartesian</strong>(<em>otherDataset</em>)</td>
+<td>在一个 T 和 U 类型的 dataset 上调用时，返回一个 (T, U) pairs 类型的 dataset（所有元素的 pairs，即笛卡尔积）。</td>
+</tr>
+<tr>
+<td><strong>pipe</strong>(<em>command</em>, <em>[envVars]</em>)</td>
+<td>通过使用 shell 命令来将每个 RDD 的分区给 Pipe。例如，一个 Perl 或 bash 脚本。RDD 的元素会被写入进程的标准输入（stdin），并且 lines（行）输出到它的标准输出（stdout）被作为一个字符串型 RDD 的 string 返回。</td>
+</tr>
+<tr>
+<td><strong>coalesce</strong>(<em>numPartitions</em>)</td>
+<td>Decrease（降低）RDD 中 partitions（分区）的数量为 numPartitions。对于执行过滤后一个大的 dataset 操作是更有效的。</td>
+</tr>
+<tr>
+<td><strong>repartition</strong>(<em>numPartitions</em>)</td>
+<td>Reshuffle（重新洗牌）RDD 中的数据以创建或者更多的 partitions（分区）并将每个分区中的数据尽量保持均匀。该操作总是通过网络来 shuffles 所有的数据。</td>
+</tr>
+<tr>
+<td><strong>repartitionAndSortWithinPartitions</strong>(<em>partitioner</em>)</td>
+<td>根据给定的 partitioner（分区器）对 RDD 进行重新分区，并在每个结果分区中，按照 key 值对记录排序。这比每一个分区中先调用 <code>repartition</code> 然后再 sorting（排序）效率更高，因为它可以将排序过程推送到 shuffle 操作的机器上进行。</td>
+</tr>
+</tbody></table>
+<h3 id="Actions（动作）"><a href="#Actions（动作）" class="headerlink" title="Actions（动作）"></a><a href="http://spark.apachecn.org/#/docs/4?id=actions（动作）" target="_blank" rel="noopener">Actions（动作）</a></h3><p>下表列出了一些 Spark 常用的 actions 操作。详细请参考 RDD API 文档（<a href="http://spark.apachecn.org/#/api/scala/index.html?id=org.apache.spark.rdd.rdd" target="_blank" rel="noopener">Scala</a>，<a href="http://spark.apachecn.org/#/api/java/index.html?org%2Fapache%2Fspark%2Fapi%2Fjava%2FJavaRDD.html" target="_blank" rel="noopener">Java</a>，<a href="http://spark.apachecn.org/#/api/python/pyspark.html?id=pyspark.rdd" target="_blank" rel="noopener">Python</a>，<a href="http://spark.apachecn.org/#/api/R/index.html" target="_blank" rel="noopener">R</a>）</p>
+<p>和 pair RDD 函数文档（<a href="http://spark.apachecn.org/#/api/scala/index.html?id=org.apache.spark.rdd.pairrddfunctions" target="_blank" rel="noopener">Scala</a>，<a href="http://spark.apachecn.org/#/api/java/index.html?org%2Fapache%2Fspark%2Fapi%2Fjava%2FJavaPairRDD.html" target="_blank" rel="noopener">Java</a>）。</p>
+<table>
+<thead>
+<tr>
+<th>Action（动作）</th>
+<th>Meaning（含义）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>reduce</strong>(<em>func</em>)</td>
+<td>使用函数 <em>func</em> 聚合 dataset 中的元素，这个函数 <em>func</em> 输入为两个元素，返回为一个元素。这个函数应该是可交换（commutative）和关联（associative）的，这样才能保证它可以被并行地正确计算。</td>
+</tr>
+<tr>
+<td><strong>collect</strong>()</td>
+<td>在 driver 程序中，以一个 array 数组的形式返回 dataset 的所有元素。这在过滤器（filter）或其他操作（other operation）之后返回足够小（sufficiently small）的数据子集通常是有用的。</td>
+</tr>
+<tr>
+<td><strong>count</strong>()</td>
+<td>返回 dataset 中元素的个数。</td>
+</tr>
+<tr>
+<td><strong>first</strong>()</td>
+<td>返回 dataset 中的第一个元素（类似于 take(1)。</td>
+</tr>
+<tr>
+<td><strong>take</strong>(<em>n</em>)</td>
+<td>将数据集中的前 <em>n</em> 个元素作为一个 array 数组返回。</td>
+</tr>
+<tr>
+<td><strong>takeSample</strong>(<em>withReplacement</em>, <em>num</em>, [_seed_])</td>
+<td>对一个 dataset 进行随机抽样，返回一个包含 <em>num</em> 个随机抽样（random sample）元素的数组，参数 withReplacement 指定是否有放回抽样，参数 seed 指定生成随机数的种子。</td>
+</tr>
+<tr>
+<td><strong>takeOrdered</strong>(<em>n</em>, <em>[ordering]</em>)</td>
+<td>返回 RDD 按自然顺序（natural order）或自定义比较器（custom comparator）排序后的前 <em>n</em> 个元素。</td>
+</tr>
+<tr>
+<td><strong>saveAsTextFile</strong>(<em>path</em>)</td>
+<td>将 dataset 中的元素以文本文件（或文本文件集合）的形式写入本地文件系统、HDFS 或其它 Hadoop 支持的文件系统中的给定目录中。Spark 将对每个元素调用 toString 方法，将数据元素转换为文本文件中的一行记录。</td>
+</tr>
+<tr>
+<td><strong>saveAsSequenceFile</strong>(<em>path</em>)</td>
+<td></td>
+</tr>
+<tr>
+<td>(Java and Scala)</td>
+<td>将 dataset 中的元素以 Hadoop SequenceFile 的形式写入到本地文件系统、HDFS 或其它 Hadoop 支持的文件系统指定的路径中。该操作可以在实现了 Hadoop 的 Writable 接口的键值对（key-value pairs）的 RDD 上使用。在 Scala 中，它还可以隐式转换为 Writable 的类型（Spark 包括了基本类型的转换，例如 Int，Double，String 等等)。</td>
+</tr>
+<tr>
+<td><strong>saveAsObjectFile</strong>(<em>path</em>)</td>
+<td></td>
+</tr>
+<tr>
+<td>(Java and Scala)</td>
+<td>使用 Java 序列化（serialization）以简单的格式（simple format）编写数据集的元素，然后使用 <code>SparkContext.objectFile()</code> 进行加载。</td>
+</tr>
+<tr>
+<td><strong>countByKey</strong>()</td>
+<td>仅适用于（K,V）类型的 RDD。返回具有每个 key 的计数的（K , Int）pairs 的 hashmap。</td>
+</tr>
+<tr>
+<td><strong>foreach</strong>(<em>func</em>)</td>
+<td>对 dataset 中每个元素运行函数 _func_。这通常用于副作用（side effects），例如更新一个 <a href="http://spark.apachecn.org/#/docs/4?id=accumulators" target="_blank" rel="noopener">Accumulator</a>（累加器）或与外部存储系统（external storage systems）进行交互。<strong>Note</strong>：修改除 <code>foreach()</code>之外的累加器以外的变量（variables）可能会导致未定义的行为（undefined behavior）。详细介绍请阅读 <a href="http://spark.apachecn.org/#/docs/4?id=understanding-closures-a-nameclosureslinka" target="_blank" rel="noopener">Understanding closures（理解闭包）</a> 部分。</td>
+</tr>
+</tbody></table>
+<p>该 Spark RDD API 还暴露了一些 actions（操作）的异步版本，例如针对 <code>foreach</code> 的 <code>foreachAsync</code>，它们会立即返回一个<code>FutureAction</code> 到调用者，而不是在完成 action 时阻塞。这可以用于管理或等待 action 的异步执行。.</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>一叶扁粥
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://weiye301.github.io/2019/12/27/spark%E7%9A%84%E7%AE%97%E5%AD%90/" title="spark的算子">https://weiye301.github.io/2019/12/27/spark%E7%9A%84%E7%AE%97%E5%AD%90/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spark/" rel="tag"># Spark</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/12/27/%E5%AD%98%E5%82%A8%E7%BA%A7%E5%88%AB/" rel="next" title="存储级别">
+                  <i class="fa fa-chevron-left"></i> 存储级别
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NzYxNC8yNDExMg=="></div>
+  </div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Transformations（转换）"><span class="nav-number">1.</span> <span class="nav-text">Transformations（转换）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Actions（动作）"><span class="nav-number">2.</span> <span class="nav-text">Actions（动作）</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一叶扁粥"
+      src="/images/1.jpg">
+  <p class="site-author-name" itemprop="name">一叶扁粥</p>
+  <div class="site-description" itemprop="description">我的博客，正在完善中。。。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/weiye301" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;weiye301" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一叶扁粥</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
