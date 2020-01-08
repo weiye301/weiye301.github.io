@@ -182,6 +182,89 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://weiye301.github.io/2018/12/27/spark%E7%9A%84%E7%AE%97%E5%AD%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="一叶扁粥">
+      <meta itemprop="description" content="我的博客，正在完善中。。。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一叶扁粥~">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/12/27/spark%E7%9A%84%E7%AE%97%E5%AD%90/" class="post-title-link" itemprop="url">spark的算子</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-12-27 11:48:19" itemprop="dateCreated datePublished" datetime="2018-12-27T11:48:19+08:00">2018-12-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-27 14:51:25" itemprop="dateModified" datetime="2019-12-27T14:51:25+08:00">2019-12-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spark/" itemprop="url" rel="index">
+                    <span itemprop="name">Spark</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Transformations（转换）"><a href="#Transformations（转换）" class="headerlink" title="Transformations（转换）"></a><a href="http://spark.apachecn.org/#/docs/4?id=transformations（转换）" target="_blank" rel="noopener">Transformations（转换）</a></h3><p>下表列出了一些 Spark 常用的 transformations（转换）。详情请参考 RDD API 文档（<a href="http://spark.apachecn.org/#/api/scala/index.html?id=org.apache.spark.rdd.rdd" target="_blank" rel="noopener">Scala</a>，<a href="http://spark.apachecn.org/#/api/java/index.html?org%2Fapache%2Fspark%2Fapi%2Fjava%2FJavaRDD.html" target="_blank" rel="noopener">Java</a>，<a href="http://spark.apachecn.org/#/api/python/pyspark.html?id=pyspark.rdd" target="_blank" rel="noopener">Python</a>，<a href="http://spark.apachecn.org/#/api/R/index.html" target="_blank" rel="noopener">R</a>）和 pair RDD 函数文档（<a href="http://spark.apachecn.org/#/api/scala/index.html?id=org.apache.spark.rdd.pairrddfunctions" target="_blank" rel="noopener">Scala</a>，<a href="http://spark.apachecn.org/#/api/java/index.html?org%2Fapache%2Fspark%2Fapi%2Fjava%2FJavaPairRDD.html" target="_blank" rel="noopener">Java</a>）。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/12/27/spark%E7%9A%84%E7%AE%97%E5%AD%90/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://weiye301.github.io/2018/12/27/%E5%AD%98%E5%82%A8%E7%BA%A7%E5%88%AB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -296,7 +379,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-01-08 09:34:16" itemprop="dateModified" datetime="2020-01-08T09:34:16+08:00">2020-01-08</time>
+                <time title="修改时间：2020-01-08 09:53:19" itemprop="dateModified" datetime="2020-01-08T09:53:19+08:00">2020-01-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -462,6 +545,17 @@ public String toString() {
     return res.toString();
 
 }</code></pre><p>}</p>
+<p>复杂度：O(1),O(n),O(lgn),O(n^2)……</p>
+<p>O：简单来说就是算法的运行时间和输入数据之间的关系</p>
+<pre><code class="java">public static int sum(int[] nums){
+    int sum=0; 
+    for(int num:nums)
+        sum+=num; 
+    return sum;</code></pre>
+<p>上面的代码时间复杂度为O(n)，其中n是nums中元素的个数，算法时间与n呈线性关系。</p>
+<p>addLast(e)  O(1)</p>
+<p>addFirst(e) O(n)</p>
+<p>add(index,e)  O(n/2)  = O(n)</p>
 
       
     </div>
@@ -527,20 +621,20 @@ public String toString() {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
