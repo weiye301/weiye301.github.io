@@ -46,17 +46,18 @@
   };
 </script>
 
-  <meta name="description" content="我的博客，正在完善中。。。">
-<meta name="keywords" content="hadoop,hive,flume,kafka,hbase,大数据">
-<meta property="og:type" content="website">
-<meta property="og:title" content="一叶扁粥~">
-<meta property="og:url" content="https:&#x2F;&#x2F;weiye301.github.io&#x2F;archives&#x2F;2020&#x2F;01&#x2F;index.html">
+  <meta name="description" content="import java.util.FormatFlagsConversionMismatchException;  public class LoopQueue&amp;lt;E&amp;gt; implements Queue&amp;lt;E&amp;gt; {      private E[] data;     private int front;     private int tail;     private in">
+<meta name="keywords" content="Queue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构之循环队列">
+<meta property="og:url" content="https:&#x2F;&#x2F;weiye301.github.io&#x2F;2018&#x2F;01&#x2F;08&#x2F;%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97&#x2F;index.html">
 <meta property="og:site_name" content="一叶扁粥~">
-<meta property="og:description" content="我的博客，正在完善中。。。">
+<meta property="og:description" content="import java.util.FormatFlagsConversionMismatchException;  public class LoopQueue&amp;lt;E&amp;gt; implements Queue&amp;lt;E&amp;gt; {      private E[] data;     private int front;     private int tail;     private in">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-01-08T09:05:15.506Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://weiye301.github.io/archives/2020/01/">
+<link rel="canonical" href="https://weiye301.github.io/2018/01/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97/">
 
 
 <script id="page-configurations">
@@ -64,13 +65,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
 
-  <title>归档 | 一叶扁粥~</title>
+  <title>数据结构之循环队列 | 一叶扁粥~</title>
   
 
 
@@ -177,53 +178,228 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 14 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://weiye301.github.io/2018/01/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="一叶扁粥">
+      <meta itemprop="description" content="我的博客，正在完善中。。。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一叶扁粥~">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据结构之循环队列
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-01-08 17:01:41" itemprop="dateCreated datePublished" datetime="2018-01-08T17:01:41+08:00">2018-01-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-08 17:05:15" itemprop="dateModified" datetime="2020-01-08T17:05:15+08:00">2020-01-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2020</h1>
+        <pre><code>import java.util.FormatFlagsConversionMismatchException;
+
+public class LoopQueue&lt;E&gt; implements Queue&lt;E&gt; {
+
+    private E[] data;
+    private int front;
+    private int tail;
+    private int size;
+
+    public LoopQueue(int capacity) {
+        data = (E[]) new Object[capacity + 1];
+        front = 0;
+        tail = 0;
+        size = 0;
+    }
+&lt;!--more--&gt;
+    public LoopQueue() {
+        this(10);
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return front == tail;
+    }
+
+    @Override
+    public void enqueue(E e) {
+
+        if ((tail + 1) % data.length == front) {
+            resize(getCapacity() * 2);
+        }
+
+        data[tail] = e;
+        tail = (tail + 1) % data.length;
+        size++;
+
+    }
+
+    private void resize(int capacity) {
+        E[] newData = (E[]) new Object[capacity + 1];
+        for (int i = 0; i &lt; size; i++) {
+            newData[i] = data[(front + i) % data.length];
+        }
+        data = newData;
+        front = 0;
+        tail = size;
+    }
+
+    @Override
+    public E dequeue() {
+        if (isEmpty()) throw new IllegalArgumentException(&quot;队列以空！&quot;);
+        E first = data[front];
+        data[front] = null;
+        front = (front + 1) % data.length;
+        size--;
+        if (size &lt;= data.length / 4) resize(data.length / 2);
+        return first;
+    }
+
+    @Override
+    public int getSize() {
+        return size;
+    }
+
+    @Override
+    public E getFront() {
+        if (isEmpty()) throw new IllegalArgumentException(&quot;队列以空！&quot;);
+        return data[front];
+    }
+
+    public int getCapacity() {
+        return data.length - 1;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder();
+        res.append(String.format(&quot;LoopQueue: size = %d , capacity = %d\n&quot;, size, data.length - 1));
+        res.append(&quot;Loop: front [&quot;);
+        for (int i = front; i != tail; i = (i + 1) % data.length) {
+            res.append(data[i]);
+            if ((i + 1) % data.length != tail) {
+                res.append(&quot;,&quot;);
+            }
+        }
+        res.append(&quot;] tail&quot;);
+        return res.toString();
+
+    }
+
+
+}
+</code></pre>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
+        
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-01-08T17:01:41+08:00"
-              content="2020-01-08">
-          01-08
-        </time>
-      </div>
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>一叶扁粥
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://weiye301.github.io/2018/01/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97/" title="数据结构之循环队列">https://weiye301.github.io/2018/01/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/01/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97/" itemprop="url">
-            <span itemprop="name">数据结构之循环队列</span>
-          </a>
-      </h2>
 
-    </header>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Queue/" rel="tag"># Queue</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2018/01/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0/" rel="next" title="数据结构之动态数组实现">
+                  <i class="fa fa-chevron-left"></i> 数据结构之动态数组实现
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2018/07/08/LeetCode%E7%AC%AC20%E9%A2%98%EF%BC%9A%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/" rel="prev" title="LeetCode第20题：有效的括号">
+                  LeetCode第20题：有效的括号 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
   </article>
+  
+  
+  
 
-
-    </div>
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NzYxNC8yNDExMg=="></div>
+  </div>
+  
 
         </div>
           
@@ -392,6 +568,19 @@
 
   
 
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
 
 </body>
 </html>
