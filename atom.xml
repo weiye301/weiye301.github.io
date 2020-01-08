@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://weiye301.github.io/"/>
-  <updated>2020-01-08T07:17:31.366Z</updated>
+  <updated>2019-12-10T03:18:12.486Z</updated>
   <id>https://weiye301.github.io/</id>
   
   <author>
@@ -15,35 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>LeetCode第20题：有效的括号</title>
-    <link href="https://weiye301.github.io/2020/01/08/LeetCode%E7%AC%AC20%E9%A2%98%EF%BC%9A%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/"/>
-    <id>https://weiye301.github.io/2020/01/08/LeetCode%E7%AC%AC20%E9%A2%98%EF%BC%9A%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/</id>
-    <published>2020-01-08T07:14:22.000Z</published>
-    <updated>2020-01-08T07:17:31.366Z</updated>
-    
-    <content type="html"><![CDATA[<p>import java.util.Stack;</p><p>class Solution {<br>    public boolean isValid(String s) {<br>        Stack<Character> stack = new Stack&lt;&gt;();<br>        for (int i = 0; i &lt; s.length(); i++) {</p><pre><code>        char c = s.charAt(i);        if (c == &#39;(&#39; || c == &#39;{&#39; || c == &#39;[&#39;) {            stack.push(c);        } else {            if(stack.isEmpty()){                return false;            }            Character peek = stack.pop();            if (c == &#39;)&#39; &amp;&amp; peek != &#39;(&#39;) return false;            if (c == &#39;]&#39; &amp;&amp; peek != &#39;[&#39;) return false;            if (c == &#39;}&#39; &amp;&amp; peek != &#39;{&#39;) return false;        }    }    return stack.isEmpty();}</code></pre><p>}</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;import java.util.Stack;&lt;/p&gt;
-&lt;p&gt;class Solution {&lt;br&gt;    public boolean isValid(String s) {&lt;br&gt;        Stack&lt;Character&gt; stack = new Stack&amp;l
-      
-    
-    </summary>
-    
-    
-      <category term="LeetCode" scheme="https://weiye301.github.io/categories/LeetCode/"/>
-    
-    
-      <category term="Stack" scheme="https://weiye301.github.io/tags/Stack/"/>
-    
-      <category term="LeetCode" scheme="https://weiye301.github.io/tags/LeetCode/"/>
-    
-  </entry>
   
   <entry>
     <title>sublime配置sftp</title>
@@ -317,6 +288,35 @@ EOF
     
     
       <category term="Spark" scheme="https://weiye301.github.io/tags/Spark/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>LeetCode第20题：有效的括号</title>
+    <link href="https://weiye301.github.io/2018/07/08/LeetCode%E7%AC%AC20%E9%A2%98%EF%BC%9A%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/"/>
+    <id>https://weiye301.github.io/2018/07/08/LeetCode%E7%AC%AC20%E9%A2%98%EF%BC%9A%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/</id>
+    <published>2018-07-08T07:14:22.000Z</published>
+    <updated>2020-01-08T07:18:24.108Z</updated>
+    
+    <content type="html"><![CDATA[<p>import java.util.Stack;</p><p>class Solution {<br>    public boolean isValid(String s) {<br>        Stack<Character> stack = new Stack&lt;&gt;();<br>        for (int i = 0; i &lt; s.length(); i++) {</p><pre><code>        char c = s.charAt(i);        if (c == &#39;(&#39; || c == &#39;{&#39; || c == &#39;[&#39;) {            stack.push(c);        } else {            if(stack.isEmpty()){                return false;            }            Character peek = stack.pop();            if (c == &#39;)&#39; &amp;&amp; peek != &#39;(&#39;) return false;            if (c == &#39;]&#39; &amp;&amp; peek != &#39;[&#39;) return false;            if (c == &#39;}&#39; &amp;&amp; peek != &#39;{&#39;) return false;        }    }    return stack.isEmpty();}</code></pre><p>}</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;import java.util.Stack;&lt;/p&gt;
+&lt;p&gt;class Solution {&lt;br&gt;    public boolean isValid(String s) {&lt;br&gt;        Stack&lt;Character&gt; stack = new Stack&amp;l
+      
+    
+    </summary>
+    
+    
+      <category term="LeetCode" scheme="https://weiye301.github.io/categories/LeetCode/"/>
+    
+    
+      <category term="Stack" scheme="https://weiye301.github.io/tags/Stack/"/>
+    
+      <category term="LeetCode" scheme="https://weiye301.github.io/tags/LeetCode/"/>
     
   </entry>
   
