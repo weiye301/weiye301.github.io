@@ -46,15 +46,15 @@
   };
 </script>
 
-  <meta name="description" content="import java.util.Stack; class Solution {    public boolean isValid(String s) {        Stack stack = new Stack&amp;lt;&amp;gt;();        for (int i = 0; i &amp;lt; s.length(); i++) {         char c = s.charAt(i);">
+  <meta name="description" content="import java.util.Stack;  class Solution {     public boolean isValid(String s) {         Stack&amp;lt;Character&amp;gt; stack = new Stack&amp;lt;&amp;gt;();         for (int i = 0; i &amp;lt; s.length(); i++) {">
 <meta name="keywords" content="Stack,LeetCode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode第20题：有效的括号">
 <meta property="og:url" content="https:&#x2F;&#x2F;weiye301.github.io&#x2F;2018&#x2F;07&#x2F;08&#x2F;LeetCode%E7%AC%AC20%E9%A2%98%EF%BC%9A%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7&#x2F;index.html">
 <meta property="og:site_name" content="一叶扁粥~">
-<meta property="og:description" content="import java.util.Stack; class Solution {    public boolean isValid(String s) {        Stack stack = new Stack&amp;lt;&amp;gt;();        for (int i = 0; i &amp;lt; s.length(); i++) {         char c = s.charAt(i);">
+<meta property="og:description" content="import java.util.Stack;  class Solution {     public boolean isValid(String s) {         Stack&amp;lt;Character&amp;gt; stack = new Stack&amp;lt;&amp;gt;();         for (int i = 0; i &amp;lt; s.length(); i++) {">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-01-08T07:18:24.108Z">
+<meta property="og:updated_time" content="2020-01-08T09:03:38.180Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://weiye301.github.io/2018/07/08/LeetCode%E7%AC%AC20%E9%A2%98%EF%BC%9A%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/">
@@ -213,7 +213,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-01-08 15:18:24" itemprop="dateModified" datetime="2020-01-08T15:18:24+08:00">2020-01-08</time>
+                <time title="修改时间：2020-01-08 17:03:38" itemprop="dateModified" datetime="2020-01-08T17:03:38+08:00">2020-01-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,26 +245,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>import java.util.Stack;</p>
-<p>class Solution {<br>    public boolean isValid(String s) {<br>        Stack<Character> stack = new Stack&lt;&gt;();<br>        for (int i = 0; i &lt; s.length(); i++) {</p>
-<pre><code>        char c = s.charAt(i);
-        if (c == &#39;(&#39; || c == &#39;{&#39; || c == &#39;[&#39;) {
-            stack.push(c);
-        } else {
-            if(stack.isEmpty()){
-                return false;
+        <pre><code>import java.util.Stack;
+
+class Solution {
+    public boolean isValid(String s) {
+        Stack&lt;Character&gt; stack = new Stack&lt;&gt;();
+        for (int i = 0; i &lt; s.length(); i++) {
+
+            char c = s.charAt(i);
+            if (c == &#39;(&#39; || c == &#39;{&#39; || c == &#39;[&#39;) {
+                stack.push(c);
+            } else {
+                if(stack.isEmpty()){
+                    return false;
+                }
+                Character peek = stack.pop();
+                if (c == &#39;)&#39; &amp;&amp; peek != &#39;(&#39;) return false;
+                if (c == &#39;]&#39; &amp;&amp; peek != &#39;[&#39;) return false;
+                if (c == &#39;}&#39; &amp;&amp; peek != &#39;{&#39;) return false;
             }
-            Character peek = stack.pop();
-            if (c == &#39;)&#39; &amp;&amp; peek != &#39;(&#39;) return false;
-            if (c == &#39;]&#39; &amp;&amp; peek != &#39;[&#39;) return false;
-            if (c == &#39;}&#39; &amp;&amp; peek != &#39;{&#39;) return false;
+
         }
 
+        return stack.isEmpty();
     }
-
-    return stack.isEmpty();
-}</code></pre><p>}</p>
-
+}</code></pre>
     </div>
 
     
@@ -367,7 +372,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -380,7 +385,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
