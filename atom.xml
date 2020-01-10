@@ -324,6 +324,39 @@ class Solution {
   </entry>
   
   <entry>
+    <title>数据结构之链表</title>
+    <link href="https://weiye301.github.io/2018/01/10/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E9%93%BE%E8%A1%A8/"/>
+    <id>https://weiye301.github.io/2018/01/10/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E9%93%BE%E8%A1%A8/</id>
+    <published>2018-01-10T08:53:36.000Z</published>
+    <updated>2020-01-10T08:54:39.490Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>public class LinkedList&lt;E&gt; {    /**     * 定义一个节点     */    private class Node {        public E e;        public Node next;        public Node(E e, Node next) {            this.e = e;            this.next = next;        }        public Node(E e) {            this(e, null);        }        public Node() {            this(null, null);        }        @Override        public String toString() {            return e.toString();        }    }    //记录链表的节点个数    private int size;    //虚拟头结点    private Node dummyHead;    public LinkedList() {        size = 0;        dummyHead = new Node(null, null);    }    /**     * 判断链表是否为空     *     * @return     */    public boolean isEmpty() {        return size == 0;    }    /**     * 获取节点个数     *     * @return     */    public int getSize() {        return size;    }    /**     * 在链表头添加节点     *     * @param e     */    public void addFirst(E e) {        add(0, e);    }    /**     * 在指定位置添加节点     *     * @param index     * @param e     */    public void add(int index, E e) {        if (index &lt; 0 || index &gt; size)            throw new IllegalArgumentException(&quot;index error&quot;);        Node find = dummyHead;        for (int i = 0; i &lt; index; i++) {            find = find.next;        }//        Node node = new Node(e);//        node.next = find.next;//        find.next = node;        find.next = new Node(e, find.next);        size++;    }    /**     * 在链表尾部添加节点     *     * @param e     */    public void addLast(E e) {        add(size, e);    }    /**     * 判断是否包含e     *     * @param e     * @return     */    public boolean contains(E e) {        Node cur = dummyHead.next;        for (int i = 0; i &lt; size; i++) {            if (e.equals(cur.e)) {                return true;            }            cur = cur.next;        }        return false;    }    /**     * 获取指定位置的元素     *     * @param index     * @return     */    public E getForIndex(int index) {        if (index &lt; 0 || index &gt; size)            throw new IllegalArgumentException(&quot;index error&quot;);        Node cur = dummyHead.next;        for (int i = 0; i &lt; index; i++) {            cur = cur.next;        }        return cur.e;    }    /**     * 获取第一个节点元素     *     * @return     */    public E getFirst() {        return getForIndex(0);    }    /**     * 获取最后一个节点值     *     * @return     */    public E getLast() {        return getForIndex(size - 1);    }    /**     * 删除指定位置节点     *     * @param index     * @return     */    public E remove(int index) {        if (index &lt; 0 || index &gt; size)            throw new IllegalArgumentException(&quot;index error&quot;);        Node prve = dummyHead;        for (int i = 0; i &lt; index; i++) {            prve = prve.next;        }        Node delNode = prve.next;        prve.next = delNode.next;        delNode.next = null;        size--;        return delNode.e;    }    public E removeFirst() {        return remove(0);    }    public E removeLast() {        return remove(size - 1);    }    /**     * 修改指定位置的值     * @param index     * @param e     */    public void set(int index, E e) {        if (index &lt; 0 || index &gt; size)            throw new IllegalArgumentException(&quot;index error&quot;);        Node cur = dummyHead.next;        for (int i = 0; i &lt; index; i++) {            cur = cur.next;        }        cur.e = e;    }    @Override    public String toString() {        StringBuilder res = new StringBuilder();        for (Node node = dummyHead.next; node != null; node = node.next) {            res.append(node.toString() + &quot;--&gt;&quot;);        }        res.append(&quot;NULL&quot;);        return res.toString();    }}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;pre&gt;&lt;code&gt;public class LinkedList&amp;lt;E&amp;gt; {
+
+    /**
+     * 定义一个节点
+     */
+    private class Node {
+        public E e;
+        public Nod
+      
+    
+    </summary>
+    
+    
+      <category term="数据结构" scheme="https://weiye301.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+    
+      <category term="LinkedList" scheme="https://weiye301.github.io/tags/LinkedList/"/>
+    
+  </entry>
+  
+  <entry>
     <title>数据结构之循环队列</title>
     <link href="https://weiye301.github.io/2018/01/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97/"/>
     <id>https://weiye301.github.io/2018/01/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97/</id>
