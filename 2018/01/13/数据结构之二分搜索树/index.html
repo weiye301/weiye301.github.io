@@ -46,17 +46,18 @@
   };
 </script>
 
-  <meta name="description" content="我的博客，正在完善中。。。">
-<meta name="keywords" content="hadoop,hive,flume,kafka,hbase,大数据">
-<meta property="og:type" content="website">
-<meta property="og:title" content="一叶扁粥~">
-<meta property="og:url" content="https:&#x2F;&#x2F;weiye301.github.io&#x2F;archives&#x2F;2019&#x2F;07&#x2F;index.html">
+  <meta name="description" content="使用java实现了二分搜索树">
+<meta name="keywords" content="BST">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构之二分搜索树">
+<meta property="og:url" content="https:&#x2F;&#x2F;weiye301.github.io&#x2F;2018&#x2F;01&#x2F;13&#x2F;%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2%E6%A0%91&#x2F;index.html">
 <meta property="og:site_name" content="一叶扁粥~">
-<meta property="og:description" content="我的博客，正在完善中。。。">
+<meta property="og:description" content="使用java实现了二分搜索树">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-01-13T08:11:15.952Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://weiye301.github.io/archives/2019/07/">
+<link rel="canonical" href="https://weiye301.github.io/2018/01/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2%E6%A0%91/">
 
 
 <script id="page-configurations">
@@ -64,13 +65,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
 
-  <title>归档 | 一叶扁粥~</title>
+  <title>数据结构之二分搜索树 | 一叶扁粥~</title>
   
 
 
@@ -177,73 +178,248 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 18 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://weiye301.github.io/2018/01/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.jpg">
+      <meta itemprop="name" content="一叶扁粥">
+      <meta itemprop="description" content="我的博客，正在完善中。。。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一叶扁粥~">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据结构之二分搜索树
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-01-13 16:08:33" itemprop="dateCreated datePublished" datetime="2018-01-13T16:08:33+08:00">2018-01-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-13 16:11:15" itemprop="dateModified" datetime="2020-01-13T16:11:15+08:00">2020-01-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
+        <p>使用java实现了二分搜索树</p>
+<a id="more"></a>
+<pre><code>public class BST&lt;E extends Comparable&lt;E&gt;&gt; {
+
+    private class Node {
+        public E e;
+        public Node left, right;
+
+        public Node(E e) {
+            this.e = e;
+            right = null;
+            left = null;
+        }
+    }
+
+    private Node root;
+    private int size;
+
+    public BST() {
+        root = null;
+        size = 0;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    //向二分搜索树中插入元素
+    public void add(E e) {
+        root = add(root, e);
+    }
+
+    //向以node为根节点的树中添加元素
+    //返回添加完的根节点
+    private Node add(Node node, E e) {
+        if (node == null) {
+            size++;
+            return new Node(e);
+        }
+
+        if (e.compareTo(node.e) &lt; 0) {
+            node.left = add(node.left, e);
+        } else if (e.compareTo(node.e) &gt; 0) {
+            node.right = add(node.right, e);
+        }
+        return node;
+    }
+
+    //查找二分搜索树中是否包含某个元素
+    public boolean contains(E e) {
+        return contains(root, e);
+    }
+
+    //查找以node为根的树中是否包含e
+    private boolean contains(Node node, E e) {
+        if (node == null) {
+            return false;
+        }
+
+        if (e.compareTo(node.e) == 0) {
+            return true;
+        } else if (e.compareTo(node.e) &lt; 0) {
+            return contains(node.left, e);
+        } else {
+            return contains(node.right, e);
+        }
+    }
+
+    //前序遍历二叉搜索树
+    public void perOrder() {
+        perOrder(root);
+    }
+
+    //使用递归实现前序遍历
+    private void perOrder(Node node) {
+        if (node == null) return;
+
+        System.out.println(node.e);
+        perOrder(node.left);
+        perOrder(node.right);
+    }
+
+    //中序遍历
+    public void inOrder() {
+        inOrder(root);
+    }
+
+    //递归实现中序遍历
+    private void inOrder(Node node) {
+        if (node == null) return;
+        inOrder(node.left);
+        System.out.println(node.e);
+        inOrder(node.right);
+    }
+
+    //后续遍历
+    public void afOrder() {
+        afOrder(root);
+    }
+
+    //递归实现后续遍历
+    private void afOrder(Node node) {
+        if (node == null) return;
+        inOrder(node.left);
+        inOrder(node.right);
+        System.out.println(node.e);
+    }
+}
+</code></pre>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
+        
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-07-15T16:15:26+08:00"
-              content="2019-07-15">
-          07-15
-        </time>
-      </div>
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>一叶扁粥
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://weiye301.github.io/2018/01/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2%E6%A0%91/" title="数据结构之二分搜索树">https://weiye301.github.io/2018/01/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E4%BA%8C%E5%88%86%E6%90%9C%E7%B4%A2%E6%A0%91/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/07/15/hue%E8%B0%83%E5%BA%A6oozie%EF%BC%8Coozie%E5%86%8D%E8%B0%83%E5%BA%A6sqoop%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" itemprop="url">
-            <span itemprop="name">hue调度oozie，oozie再调度sqoop遇到的问题</span>
-          </a>
-      </h2>
 
-    </header>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/BST/" rel="tag"># BST</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2018/01/10/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E7%94%A8%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/" rel="next" title="数据结构之用链表实现队列">
+                  <i class="fa fa-chevron-left"></i> 数据结构之用链表实现队列
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2018/07/08/LeetCode%E7%AC%AC20%E9%A2%98%EF%BC%9A%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/" rel="prev" title="LeetCode第20题：有效的括号">
+                  LeetCode第20题：有效的括号 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
   </article>
+  
+  
+  
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-07-15T14:33:12+08:00"
-              content="2019-07-15">
-          07-15
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/07/15/ssh%E7%AA%81%E7%84%B6%E5%A4%B1%E6%95%88/" itemprop="url">
-            <span itemprop="name">ssh突然失效</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-
-    </div>
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NzYxNC8yNDExMg=="></div>
+  </div>
+  
 
         </div>
           
@@ -412,6 +588,19 @@
 
   
 
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
 
 </body>
 </html>
