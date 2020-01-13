@@ -46,15 +46,15 @@
   };
 </script>
 
-  <meta name="description" content="import java.util.Stack;  class Solution {     public boolean isValid(String s) {         Stack&amp;lt;Character&amp;gt; stack = new Stack&amp;lt;&amp;gt;();         for (int i = 0; i &amp;lt; s.length(); i++) {">
-<meta name="keywords" content="Stack,LeetCode">
+  <meta name="description" content="给定一个只包括 &amp;#39;(&amp;#39;，&amp;#39;)&amp;#39;，&amp;#39;{&amp;#39;，&amp;#39;}&amp;#39;，&amp;#39;[&amp;#39;，&amp;#39;]&amp;#39;的字符串，判断字符串是否有效。 有效字符串需满足： 左括号必须用相同类型的右括号闭合。左括号必须以正确的顺序闭合。注意空字符串可被认为是有效字符串。 示例 1: 输入: &amp;quot;()&amp;quot; 输出: true示例 2: 输入: &amp;qu">
+<meta name="keywords" content="LeetCode,Stack">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode第20题：有效的括号">
 <meta property="og:url" content="https:&#x2F;&#x2F;weiye301.github.io&#x2F;2018&#x2F;07&#x2F;08&#x2F;LeetCode%E7%AC%AC20%E9%A2%98%EF%BC%9A%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7&#x2F;index.html">
 <meta property="og:site_name" content="一叶扁粥~">
-<meta property="og:description" content="import java.util.Stack;  class Solution {     public boolean isValid(String s) {         Stack&amp;lt;Character&amp;gt; stack = new Stack&amp;lt;&amp;gt;();         for (int i = 0; i &amp;lt; s.length(); i++) {">
+<meta property="og:description" content="给定一个只包括 &amp;#39;(&amp;#39;，&amp;#39;)&amp;#39;，&amp;#39;{&amp;#39;，&amp;#39;}&amp;#39;，&amp;#39;[&amp;#39;，&amp;#39;]&amp;#39;的字符串，判断字符串是否有效。 有效字符串需满足： 左括号必须用相同类型的右括号闭合。左括号必须以正确的顺序闭合。注意空字符串可被认为是有效字符串。 示例 1: 输入: &amp;quot;()&amp;quot; 输出: true示例 2: 输入: &amp;qu">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-01-10T09:25:34.473Z">
+<meta property="og:updated_time" content="2020-01-13T03:02:20.406Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://weiye301.github.io/2018/07/08/LeetCode%E7%AC%AC20%E9%A2%98%EF%BC%9A%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/">
@@ -213,7 +213,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-01-10 17:25:34" itemprop="dateModified" datetime="2020-01-10T17:25:34+08:00">2020-01-10</time>
+                <time title="修改时间：2020-01-13 11:02:20" itemprop="dateModified" datetime="2020-01-13T11:02:20+08:00">2020-01-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,7 +245,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <a id="more"></a>
+        <p>给定一个只包括 <code>&#39;(&#39;，&#39;)&#39;，&#39;{&#39;，&#39;}&#39;，&#39;[&#39;，&#39;]&#39;</code>的字符串，判断字符串是否有效。</p>
+<p>有效字符串需满足：</p>
+<p>左括号必须用相同类型的右括号闭合。<br>左括号必须以正确的顺序闭合。<br>注意空字符串可被认为是有效字符串。</p>
+<p>示例 1:</p>
+<pre><code>输入: &quot;()&quot;
+输出: true</code></pre><p>示例 2:</p>
+<pre><code>输入: &quot;()[]{}&quot;
+输出: true</code></pre><p>示例 3:</p>
+<pre><code>输入: &quot;(]&quot;
+输出: false</code></pre><p>示例 4:</p>
+<pre><code>输入: &quot;([)]&quot;
+输出: false</code></pre><p>示例 5:</p>
+<pre><code>输入: &quot;{[]}&quot;
+输出: true</code></pre><p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/valid-parentheses" target="_blank" rel="noopener">https://leetcode-cn.com/problems/valid-parentheses</a></p>
+<a id="more"></a>
 <pre><code>import java.util.Stack;
 
 class Solution {
@@ -296,8 +310,8 @@ class Solution {
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Stack/" rel="tag"># Stack</a>
               <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
+              <a href="/tags/Stack/" rel="tag"># Stack</a>
           </div>
 
         
@@ -312,8 +326,8 @@ class Solution {
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2018/12/27/%E5%AD%98%E5%82%A8%E7%BA%A7%E5%88%AB/" rel="prev" title="存储级别">
-                  存储级别 <i class="fa fa-chevron-right"></i>
+                <a href="/2018/07/13/LeetCode%E7%AC%AC203%E9%A2%98%EF%BC%9A%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0/" rel="prev" title="LeetCode第203题：移除链表元素">
+                  LeetCode第203题：移除链表元素 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -373,7 +387,7 @@ class Solution {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
