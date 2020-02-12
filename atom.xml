@@ -338,9 +338,9 @@ EOF
       <category term="LeetCode" scheme="https://weiye301.github.io/categories/LeetCode/"/>
     
     
-      <category term="LinkedList" scheme="https://weiye301.github.io/tags/LinkedList/"/>
-    
       <category term="LeetCode" scheme="https://weiye301.github.io/tags/LeetCode/"/>
+    
+      <category term="LinkedList" scheme="https://weiye301.github.io/tags/LinkedList/"/>
     
   </entry>
   
@@ -376,9 +376,9 @@ EOF
       <category term="LeetCode" scheme="https://weiye301.github.io/categories/LeetCode/"/>
     
     
-      <category term="LeetCode" scheme="https://weiye301.github.io/tags/LeetCode/"/>
-    
       <category term="Stack" scheme="https://weiye301.github.io/tags/Stack/"/>
+    
+      <category term="LeetCode" scheme="https://weiye301.github.io/tags/LeetCode/"/>
     
   </entry>
   
